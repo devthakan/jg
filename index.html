@@ -42,15 +42,15 @@
             transition: opacity 1s ease-out;
         }
         #corruption-overlay.hidden { opacity: 0; pointer-events: none; }
-        .loading-container { text-align: center; }
+        .loading-container { text-align: center; width: 90%; }
         #loading-logo {
             width: 80px; height: 80px; border: 4px solid #fff;
             border-radius: 50%; border-top-color: var(--primary-color);
             animation: spin 1s linear infinite; margin: 0 auto 20px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        #loading-text { font-size: 1.5em; letter-spacing: 2px; }
-        #progress-bar-container { width: 80%; max-width: 400px; height: 10px; border: 1px solid #fff; margin-top: 20px; }
+        #loading-text { font-size: 1.2em; letter-spacing: 2px; }
+        #progress-bar-container { width: 100%; max-width: 400px; height: 10px; border: 1px solid #fff; margin: 20px auto 0; }
         #os-progress-bar { width: 0%; height: 100%; background: #fff; transition: width 0.1s linear; }
         .warning-popup {
             position: absolute; background: #d0d0d0; color: #000;
@@ -63,8 +63,9 @@
         .glitch { animation: glitch-effect 0.3s infinite; }
         @keyframes glitch-effect { 0% { transform: translate(0); } 20% { transform: translate(-3px, 3px); } 40% { transform: translate(-3px, -3px); } 60% { transform: translate(3px, 3px); } 80% { transform: translate(3px, -3px); } 100% { transform: translate(0); } }
         #hacker-message {
-            font-size: clamp(1.5rem, 5vw, 3rem); color: var(--primary-color);
+            font-size: clamp(1.2rem, 5vw, 2.5rem); color: var(--primary-color);
             text-align: center; text-shadow: var(--glow-shadow); display: none;
+            padding: 0 10px;
         }
         
         /* --- Main Content --- */
@@ -72,53 +73,38 @@
         body.loaded .main-content { opacity: 1; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
         .header { position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000; background: linear-gradient(to bottom, rgba(13, 13, 18, 0.8), transparent); }
-        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--primary-color); font-size: 2rem; text-decoration: none; text-shadow: var(--glow-shadow); }
-        .hero { height: 100vh; display: flex; align-items: center; position: relative; background: url('https://www.transparenttextures.com/patterns/cubes.png'), var(--background-color); }
+        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--primary-color); font-size: 1.8rem; text-decoration: none; text-shadow: var(--glow-shadow); }
+        .hero { min-height: 100vh; display: flex; align-items: center; position: relative; background: url('https://www.transparenttextures.com/patterns/cubes.png'), var(--background-color); }
         .hero .container { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 50px; }
         .hero-text-content { z-index: 2; }
-        .hero-title { font-family: 'Orbitron', sans-serif; font-size: clamp(3rem, 10vw, 5.5rem); color: #fff; text-shadow: var(--glow-shadow); margin-bottom: 10px; }
-        .hero-subtitle { font-family: 'Share Tech Mono', monospace; font-size: 1.5rem; color: var(--primary-color); margin-bottom: 30px; }
+        .hero-title { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 8vw, 5rem); color: #fff; text-shadow: var(--glow-shadow); margin-bottom: 10px; line-height: 1.1; }
+        .hero-subtitle { font-family: 'Share Tech Mono', monospace; font-size: clamp(1rem, 4vw, 1.5rem); color: var(--primary-color); margin-bottom: 30px; }
         .cta-button { display: inline-block; font-family: 'Orbitron', sans-serif; background: var(--primary-color); color: #000; padding: 12px 30px; text-decoration: none; font-weight: 700; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); transition: transform 0.3s ease; }
         .cta-button:hover { transform: scale(1.05); }
         .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
-        .hexagon-frame { position: relative; width: 350px; height: 400px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; justify-content: center; align-items: center; }
+        .hexagon-frame { 
+            position: relative; 
+            width: clamp(280px, 90vw, 350px); 
+            height: clamp(320px, 103vw, 400px);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); 
+            display: flex; justify-content: center; align-items: center; 
+        }
         .hexagon-frame::before { content: ''; position: absolute; inset: -3px; background: linear-gradient(45deg, var(--primary-color), #ff8800, var(--primary-color)); background-size: 200% 200%; animation: gradient-flow 5s ease infinite; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); z-index: 1; }
         @keyframes gradient-flow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .hexagon-frame .profile-pic { position: relative; width: 98%; height: 98%; object-fit: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); z-index: 2; }
         .section { padding: 100px 0; }
-        .section-title { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.8rem; margin-bottom: 60px; color: var(--primary-color); text-shadow: var(--glow-shadow); }
+        .section-title { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--primary-color); text-shadow: var(--glow-shadow); }
         .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
         .skill-card { background: var(--card-color); border: 1px solid rgba(255, 217, 0, 0.2); padding: 30px; text-align: center; clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%); transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .skill-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255, 217, 0, 0.1); border-color: var(--primary-color); }
         .skill-card i { font-size: 3rem; color: var(--primary-color); margin-bottom: 15px; }
         .skill-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; }
-
-        /* --- Projects Section --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        .project-link-card {
-            display: block; text-decoration: none; background: var(--card-color);
-            border: 1px solid rgba(255, 217, 0, 0.2); padding: 25px 30px; text-align: center;
-            clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .project-link-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(255, 217, 0, 0.1);
-            border-color: var(--primary-color);
-        }
-        .project-link-card h3 {
-            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary-color); margin: 0;
-        }
-        .project-link-card i {
-            font-size: 1rem; color: var(--text-color); margin-left: 10px; transition: transform 0.3s ease;
-        }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .project-link-card { display: block; text-decoration: none; background: var(--card-color); border: 1px solid rgba(255, 217, 0, 0.2); padding: 25px 30px; text-align: center; clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .project-link-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255, 217, 0, 0.1); border-color: var(--primary-color); }
+        .project-link-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary-color); margin: 0; }
+        .project-link-card i { font-size: 1rem; color: var(--text-color); margin-left: 10px; transition: transform 0.3s ease; }
         .project-link-card:hover i { transform: translateX(5px); }
-        
-        /* --- Footer Section --- */
         .footer { text-align: center; padding: 40px 0; margin-top: 60px; border-top: 1px solid rgba(255, 217, 0, 0.2); }
         .footer-social-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 25px; }
         .footer-social-links .social-link { font-size: 1.8rem; color: var(--text-color); transition: all 0.3s ease; }
@@ -126,16 +112,24 @@
         .footer p { font-family: 'Share Tech Mono', monospace; }
         .footer span { color: var(--primary-color); font-family: 'Orbitron', sans-serif; }
 
+        /* --- MOBILE FRIENDLY STYLES --- */
         @media (max-width: 900px) {
             .hero .container { grid-template-columns: 1fr; text-align: center; }
-            .hero-text-content { order: 2; }
-            .hero-visual { order: 1; margin-bottom: 40px; }
-            .hexagon-frame { width: 300px; height: 342px; }
+            .hero-text-content { order: 2; margin-top: 40px; }
+            .hero-visual { order: 1; }
         }
-        @media (max-width: 480px) {
-            .hero-title { font-size: 2.5rem; } .hero-subtitle { font-size: 1.2rem; }
-            .warning-popup { width: 90%; left: 5% !important; right: 5% !important; top: auto !important; }
-            #warning1 { bottom: 55%; } #warning2 { bottom: 25%; }
+        @media (max-width: 600px) {
+            #warning1, #warning2 {
+                position: relative;
+                top: auto; left: auto; right: auto;
+                margin: 15px auto;
+                width: 90%;
+            }
+            .loading-container {
+                display: flex; flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -175,11 +169,11 @@
             <section class="hero">
                 <div class="container">
                     <div class="hero-text-content">
-                        <h1 class="hero-title" data-aos="fade-right">JG Legha</h1>
-                        <p class="hero-subtitle" data-aos="fade-right" data-aos-delay="200">Excel Expert // Python Developer // YouTuber</p>
-                        <a href="#skills" class="cta-button" data-aos="fade-right" data-aos-delay="400">Analyze Skills</a>
+                        <h1 class="hero-title" data-aos="fade-up">JG Legha</h1>
+                        <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">Excel Expert // Python Developer // YouTuber</p>
+                        <a href="#skills" class="cta-button" data-aos="fade-up" data-aos-delay="400">Analyze Skills</a>
                     </div>
-                    <div class="hero-visual" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="hero-visual" data-aos="zoom-in" data-aos-delay="200">
                         <div class="hexagon-frame">
                             <img src="https://live.staticflickr.com/65535/54844410191_73b9b81752_z.jpg" alt="JG Legha Profile" class="profile-pic">
                         </div>
@@ -207,10 +201,10 @@
                             <h3>My First Website <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
                         </a>
                         <a href="https://terahmsafar.blogspot.com/" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="200">
-                            <h3>My 2 Website  <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
+                            <h3>My 2 Website <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
                         </a>
-                        <a href="https://devthakan.github.io/visal/" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="300">
-                            <h3>My 2 Website   <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
+                        <a href="https://vishallegha.blogspot.com/" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="300">
+                            <h3>My 3 Website <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
                         </a>
                     </div>
                 </div>
