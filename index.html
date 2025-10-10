@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JG Legha // Initializing System...</title>
+    <title>JG Legha // Accessing Mainframe...</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,166 +26,104 @@
             font-family: 'Roboto', sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
-            overflow: hidden; /* Hide scrollbars during intro */
+            overflow-x: hidden;
+            overflow-y: hidden; 
         }
         body.loaded {
-            overflow: auto; /* Restore scrollbars */
+            overflow-y: auto;
         }
 
-        /* --- NEW "SYSTEM CORRUPTION" INTRO --- */
+        /* --- "SYSTEM CORRUPTION" INTRO --- */
         #corruption-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000c1f; /* Dark blue OS color */
-            z-index: 9999;
-            font-family: 'Share Tech Mono', monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: #fff;
-            transition: opacity 1s ease-out, transform 0.5s ease-out;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000c1f; z-index: 9999; font-family: 'Share Tech Mono', monospace;
+            display: flex; justify-content: center; align-items: center;
+            flex-direction: column; color: #fff;
+            transition: opacity 1s ease-out;
         }
-        #corruption-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
+        #corruption-overlay.hidden { opacity: 0; pointer-events: none; }
         .loading-container { text-align: center; }
         #loading-logo {
             width: 80px; height: 80px; border: 4px solid #fff;
             border-radius: 50%; border-top-color: var(--primary-color);
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
+            animation: spin 1s linear infinite; margin: 0 auto 20px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         #loading-text { font-size: 1.5em; letter-spacing: 2px; }
-        #progress-bar-container {
-            width: 80%; max-width: 400px; height: 10px;
-            border: 1px solid #fff; margin-top: 20px;
-        }
-        #os-progress-bar {
-            width: 0%; height: 100%; background: #fff;
-            transition: width 0.1s linear;
-        }
-        
-        /* Glitch and Warning styles */
+        #progress-bar-container { width: 80%; max-width: 400px; height: 10px; border: 1px solid #fff; margin-top: 20px; }
+        #os-progress-bar { width: 0%; height: 100%; background: #fff; transition: width 0.1s linear; }
         .warning-popup {
-            position: absolute;
-            background: #d0d0d0; color: #000;
-            border: 2px solid red;
-            padding: 10px;
-            display: none; /* Hidden by default */
-            box-shadow: 0 0 15px red;
+            position: absolute; background: #d0d0d0; color: #000;
+            border: 2px solid red; padding: 10px; display: none;
+            box-shadow: 0 0 15px red; width: 280px;
         }
         .warning-popup h4 { background: red; color: #fff; padding: 5px; margin: -10px -10px 10px -10px; }
         #warning1 { top: 20%; left: 15%; }
         #warning2 { top: 50%; right: 20%; }
         .glitch { animation: glitch-effect 0.3s infinite; }
-        @keyframes glitch-effect {
-            0% { transform: translate(0); } 20% { transform: translate(-3px, 3px); }
-            40% { transform: translate(-3px, -3px); } 60% { transform: translate(3px, 3px); }
-            80% { transform: translate(3px, -3px); } 100% { transform: translate(0); }
-        }
+        @keyframes glitch-effect { 0% { transform: translate(0); } 20% { transform: translate(-3px, 3px); } 40% { transform: translate(-3px, -3px); } 60% { transform: translate(3px, 3px); } 80% { transform: translate(3px, -3px); } 100% { transform: translate(0); } }
         #hacker-message {
-            font-size: clamp(1.5rem, 5vw, 3rem);
-            color: var(--primary-color);
-            text-align: center;
-            text-shadow: var(--glow-shadow);
-            display: none;
+            font-size: clamp(1.5rem, 5vw, 3rem); color: var(--primary-color);
+            text-align: center; text-shadow: var(--glow-shadow); display: none;
         }
-
-
-        /* --- Main Content (No changes from previous version) --- */
-        .main-content {
-            opacity: 0;
-            transition: opacity 1s ease 0.5s;
-        }
-        body.loaded .main-content {
-            opacity: 1;
-        }
+        
+        /* --- Main Content --- */
+        .main-content { opacity: 0; transition: opacity 1s ease 0.5s; }
+        body.loaded .main-content { opacity: 1; }
         .container { max-width: 1200px; margin: auto; padding: 0 20px; }
-        .header {
-            position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000;
-            background: linear-gradient(to bottom, rgba(13, 13, 18, 0.8), transparent);
-        }
-        .logo { 
-            font-family: 'Orbitron', sans-serif; font-weight: 900;
-            color: var(--primary-color); font-size: 2rem; 
-            text-decoration: none; text-shadow: var(--glow-shadow);
-        }
-        .hero {
-            height: 100vh; display: flex; align-items: center; position: relative;
-            background: url('https://www.transparenttextures.com/patterns/cubes.png'), var(--background-color);
-        }
-        .hero .container {
-            display: grid; grid-template-columns: 1.2fr 1fr;
-            align-items: center; gap: 50px;
-        }
+        .header { position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000; background: linear-gradient(to bottom, rgba(13, 13, 18, 0.8), transparent); }
+        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--primary-color); font-size: 2rem; text-decoration: none; text-shadow: var(--glow-shadow); }
+        .hero { height: 100vh; display: flex; align-items: center; position: relative; background: url('https://www.transparenttextures.com/patterns/cubes.png'), var(--background-color); }
+        .hero .container { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 50px; }
         .hero-text-content { z-index: 2; }
-        .hero-title {
-            font-family: 'Orbitron', sans-serif; font-size: clamp(3rem, 10vw, 5.5rem);
-            color: #fff; text-shadow: var(--glow-shadow); margin-bottom: 10px;
-        }
-        .hero-subtitle {
-            font-family: 'Share Tech Mono', monospace; font-size: 1.5rem;
-            color: var(--primary-color); margin-bottom: 30px;
-        }
-        .cta-button {
-            display: inline-block; font-family: 'Orbitron', sans-serif;
-            background: var(--primary-color); color: #000; padding: 12px 30px;
-            text-decoration: none; font-weight: 700;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            transition: transform 0.3s ease;
-        }
+        .hero-title { font-family: 'Orbitron', sans-serif; font-size: clamp(3rem, 10vw, 5.5rem); color: #fff; text-shadow: var(--glow-shadow); margin-bottom: 10px; }
+        .hero-subtitle { font-family: 'Share Tech Mono', monospace; font-size: 1.5rem; color: var(--primary-color); margin-bottom: 30px; }
+        .cta-button { display: inline-block; font-family: 'Orbitron', sans-serif; background: var(--primary-color); color: #000; padding: 12px 30px; text-decoration: none; font-weight: 700; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); transition: transform 0.3s ease; }
         .cta-button:hover { transform: scale(1.05); }
-        .hero-visual {
-            position: relative; display: flex; justify-content: center; align-items: center;
-        }
-        .hexagon-frame {
-            position: relative; width: 350px; height: 400px;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex; justify-content: center; align-items: center;
-        }
-        .hexagon-frame::before {
-            content: ''; position: absolute; inset: -3px;
-            background: linear-gradient(45deg, var(--primary-color), #ff8800, var(--primary-color));
-            background-size: 200% 200%;
-            animation: gradient-flow 5s ease infinite;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            z-index: 1;
-        }
-        @keyframes gradient-flow {
-            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
-        }
-        .hexagon-frame .profile-pic {
-            position: relative; width: 98%; height: 98%; object-fit: cover;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            z-index: 2;
-        }
+        .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+        .hexagon-frame { position: relative; width: 350px; height: 400px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; justify-content: center; align-items: center; }
+        .hexagon-frame::before { content: ''; position: absolute; inset: -3px; background: linear-gradient(45deg, var(--primary-color), #ff8800, var(--primary-color)); background-size: 200% 200%; animation: gradient-flow 5s ease infinite; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); z-index: 1; }
+        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .hexagon-frame .profile-pic { position: relative; width: 98%; height: 98%; object-fit: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); z-index: 2; }
         .section { padding: 100px 0; }
-        .section-title {
-            font-family: 'Orbitron', sans-serif; text-align: center;
-            font-size: 2.8rem; margin-bottom: 60px; color: var(--primary-color);
-            text-shadow: var(--glow-shadow);
+        .section-title { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.8rem; margin-bottom: 60px; color: var(--primary-color); text-shadow: var(--glow-shadow); }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .skill-card { background: var(--card-color); border: 1px solid rgba(255, 217, 0, 0.2); padding: 30px; text-align: center; clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .skill-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255, 217, 0, 0.1); border-color: var(--primary-color); }
+        .skill-card i { font-size: 3rem; color: var(--primary-color); margin-bottom: 15px; }
+        .skill-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; }
+
+        /* --- Projects Section --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
-        .skills-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;
-        }
-        .skill-card {
-            background: var(--card-color); border: 1px solid rgba(255, 217, 0, 0.2);
-            padding: 30px; text-align: center;
+        .project-link-card {
+            display: block; text-decoration: none; background: var(--card-color);
+            border: 1px solid rgba(255, 217, 0, 0.2); padding: 25px 30px; text-align: center;
             clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .skill-card:hover {
+        .project-link-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 10px 30px rgba(255, 217, 0, 0.1);
             border-color: var(--primary-color);
         }
-        .skill-card i { font-size: 3rem; color: var(--primary-color); margin-bottom: 15px; }
-        .skill-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; }
+        .project-link-card h3 {
+            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary-color); margin: 0;
+        }
+        .project-link-card i {
+            font-size: 1rem; color: var(--text-color); margin-left: 10px; transition: transform 0.3s ease;
+        }
+        .project-link-card:hover i { transform: translateX(5px); }
         
-        .footer { text-align: center; padding: 30px 0; margin-top: 60px; border-top: 1px solid rgba(255, 217, 0, 0.2); }
+        /* --- Footer Section --- */
+        .footer { text-align: center; padding: 40px 0; margin-top: 60px; border-top: 1px solid rgba(255, 217, 0, 0.2); }
+        .footer-social-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 25px; }
+        .footer-social-links .social-link { font-size: 1.8rem; color: var(--text-color); transition: all 0.3s ease; }
+        .footer-social-links .social-link:hover { color: var(--primary-color); transform: translateY(-5px); text-shadow: var(--glow-shadow); }
+        .footer p { font-family: 'Share Tech Mono', monospace; }
         .footer span { color: var(--primary-color); font-family: 'Orbitron', sans-serif; }
 
         @media (max-width: 900px) {
@@ -194,7 +132,11 @@
             .hero-visual { order: 1; margin-bottom: 40px; }
             .hexagon-frame { width: 300px; height: 342px; }
         }
-
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2.5rem; } .hero-subtitle { font-size: 1.2rem; }
+            .warning-popup { width: 90%; left: 5% !important; right: 5% !important; top: auto !important; }
+            #warning1 { bottom: 55%; } #warning2 { bottom: 25%; }
+        }
     </style>
 </head>
 <body>
@@ -207,7 +149,6 @@
                 <div id="os-progress-bar"></div>
             </div>
         </div>
-        
         <div class="warning-popup" id="warning1">
             <h4><i class="fa-solid fa-triangle-exclamation"></i> WARNING</h4>
             <p>Unidentified intrusion detected.<br>Firewall compromised.</p>
@@ -216,14 +157,12 @@
              <h4><i class="fa-solid fa-biohazard"></i> SYSTEM ALERT</h4>
             <p>Core integrity failing...</p>
         </div>
-
         <div id="hacker-message">
             <p>> YOUR SYSTEM IS MINE.</p>
             <p>> WELCOME TO MY WORLD.</p>
             <p>> - JGL</p>
         </div>
     </div>
-
 
     <div class="main-content">
         <header class="header">
@@ -252,24 +191,39 @@
                 <div class="container">
                     <h2 class="section-title" data-aos="fade-up">// CORE_PROTOCOLS</h2>
                     <div class="skills-grid">
-                        <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-                            <i class="fa-solid fa-file-excel"></i><h3>Excel Mastery</h3>
-                        </div>
-                        <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-                            <i class="fa-brands fa-python"></i><h3>Python Scripting</h3>
-                        </div>
-                        <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
-                            <i class="fa-solid fa-code"></i><h3>Web Development</h3>
-                        </div>
-                        <div class="skill-card" data-aos="fade-up" data-aos-delay="400">
-                            <i class="fa-brands fa-youtube"></i><h3>Content Creation</h3>
-                        </div>
+                        <div class="skill-card" data-aos="fade-up" data-aos-delay="100"><i class="fa-solid fa-file-excel"></i><h3>Excel Mastery</h3></div>
+                        <div class="skill-card" data-aos="fade-up" data-aos-delay="200"><i class="fa-brands fa-python"></i><h3>Python Scripting</h3></div>
+                        <div class="skill-card" data-aos="fade-up" data-aos-delay="300"><i class="fa-solid fa-code"></i><h3>Web Development</h3></div>
+                        <div class="skill-card" data-aos="fade-up" data-aos-delay="400"><i class="fa-brands fa-youtube"></i><h3>Content Creation</h3></div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="projects" class="section">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">// DEPLOYED_PROJECTS</h2>
+                    <div class="projects-grid">
+                        <a href="https://www.kanodgramsewasahkarisamiti.live/#" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="100">
+                            <h3>My First Website <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
+                        </a>
+                        <a href="https://terahmsafar.blogspot.com/" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="200">
+                            <h3>My 2 Website  <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
+                        </a>
+                        <a href="https://devthakan.github.io/visal/" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="300">
+                            <h3>My 2 Website   <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
+                        </a>
                     </div>
                 </div>
             </section>
         </main>
 
         <footer class="footer">
+            <div class="footer-social-links">
+                <a href="#" class="social-link" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="social-link" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" class="social-link" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="social-link" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            </div>
             <p>&copy; 2025 <span>JG Legha</span> // Connection Terminated</p>
         </footer>
     </div>
@@ -285,31 +239,22 @@
             const hackerMessage = document.getElementById('hacker-message');
             const body = document.body;
 
-            // --- Intro Sequence Timeline ---
             let progress = 0;
             const progressInterval = setInterval(() => {
-                if (progress < 70) { // Let it load normally until 70%
+                if (progress < 70) {
                     progress += 2;
                     progressBar.style.width = progress + '%';
                 }
             }, 50);
 
-            // 1. Freeze progress bar and start glitching
             setTimeout(() => {
                 clearInterval(progressInterval);
                 loadingScreen.classList.add('glitch');
             }, 2500);
 
-            // 2. Show warning popups
-            setTimeout(() => {
-                warning1.style.display = 'block';
-            }, 3000);
+            setTimeout(() => { warning1.style.display = 'block'; }, 3000);
+            setTimeout(() => { warning2.style.display = 'block'; }, 3500);
 
-            setTimeout(() => {
-                warning2.style.display = 'block';
-            }, 3500);
-
-            // 3. System takeover
             setTimeout(() => {
                 loadingScreen.style.display = 'none';
                 warning1.style.display = 'none';
@@ -317,7 +262,6 @@
                 hackerMessage.style.display = 'block';
             }, 4500);
 
-            // 4. Hide overlay and show main site
             setTimeout(() => {
                 overlay.classList.add('hidden');
                 body.classList.add('loaded');
