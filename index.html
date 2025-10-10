@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JG Legha // Initializing System...</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #ffd900; /* Cyber Yellow */
+            --background-color: #0d0d12; /* Deep Dark */
+            --card-color: #1a1a23;
+            --text-color: #d0d0d0;
+            --glow-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            overflow: hidden; /* Hide scrollbars during intro */
+        }
+        body.loaded {
+            overflow: auto; /* Restore scrollbars */
+        }
+
+        /* --- NEW "SYSTEM CORRUPTION" INTRO --- */
+        #corruption-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000c1f; /* Dark blue OS color */
+            z-index: 9999;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: #fff;
+            transition: opacity 1s ease-out, transform 0.5s ease-out;
+        }
+        #corruption-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loading-container { text-align: center; }
+        #loading-logo {
+            width: 80px; height: 80px; border: 4px solid #fff;
+            border-radius: 50%; border-top-color: var(--primary-color);
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #loading-text { font-size: 1.5em; letter-spacing: 2px; }
+        #progress-bar-container {
+            width: 80%; max-width: 400px; height: 10px;
+            border: 1px solid #fff; margin-top: 20px;
+        }
+        #os-progress-bar {
+            width: 0%; height: 100%; background: #fff;
+            transition: width 0.1s linear;
+        }
+        
+        /* Glitch and Warning styles */
+        .warning-popup {
+            position: absolute;
+            background: #d0d0d0; color: #000;
+            border: 2px solid red;
+            padding: 10px;
+            display: none; /* Hidden by default */
+            box-shadow: 0 0 15px red;
+        }
+        .warning-popup h4 { background: red; color: #fff; padding: 5px; margin: -10px -10px 10px -10px; }
+        #warning1 { top: 20%; left: 15%; }
+        #warning2 { top: 50%; right: 20%; }
+        .glitch { animation: glitch-effect 0.3s infinite; }
+        @keyframes glitch-effect {
+            0% { transform: translate(0); } 20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); } 60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); } 100% { transform: translate(0); }
+        }
+        #hacker-message {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            color: var(--primary-color);
+            text-align: center;
+            text-shadow: var(--glow-shadow);
+            display: none;
+        }
+
+
+        /* --- Main Content (No changes from previous version) --- */
+        .main-content {
+            opacity: 0;
+            transition: opacity 1s ease 0.5s;
+        }
+        body.loaded .main-content {
+            opacity: 1;
+        }
+        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
+        .header {
+            position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000;
+            background: linear-gradient(to bottom, rgba(13, 13, 18, 0.8), transparent);
+        }
+        .logo { 
+            font-family: 'Orbitron', sans-serif; font-weight: 900;
+            color: var(--primary-color); font-size: 2rem; 
+            text-decoration: none; text-shadow: var(--glow-shadow);
+        }
+        .hero {
+            height: 100vh; display: flex; align-items: center; position: relative;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png'), var(--background-color);
+        }
+        .hero .container {
+            display: grid; grid-template-columns: 1.2fr 1fr;
+            align-items: center; gap: 50px;
+        }
+        .hero-text-content { z-index: 2; }
+        .hero-title {
+            font-family: 'Orbitron', sans-serif; font-size: clamp(3rem, 10vw, 5.5rem);
+            color: #fff; text-shadow: var(--glow-shadow); margin-bottom: 10px;
+        }
+        .hero-subtitle {
+            font-family: 'Share Tech Mono', monospace; font-size: 1.5rem;
+            color: var(--primary-color); margin-bottom: 30px;
+        }
+        .cta-button {
+            display: inline-block; font-family: 'Orbitron', sans-serif;
+            background: var(--primary-color); color: #000; padding: 12px 30px;
+            text-decoration: none; font-weight: 700;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: transform 0.3s ease;
+        }
+        .cta-button:hover { transform: scale(1.05); }
+        .hero-visual {
+            position: relative; display: flex; justify-content: center; align-items: center;
+        }
+        .hexagon-frame {
+            position: relative; width: 350px; height: 400px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex; justify-content: center; align-items: center;
+        }
+        .hexagon-frame::before {
+            content: ''; position: absolute; inset: -3px;
+            background: linear-gradient(45deg, var(--primary-color), #ff8800, var(--primary-color));
+            background-size: 200% 200%;
+            animation: gradient-flow 5s ease infinite;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            z-index: 1;
+        }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+        .hexagon-frame .profile-pic {
+            position: relative; width: 98%; height: 98%; object-fit: cover;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            z-index: 2;
+        }
+        .section { padding: 100px 0; }
+        .section-title {
+            font-family: 'Orbitron', sans-serif; text-align: center;
+            font-size: 2.8rem; margin-bottom: 60px; color: var(--primary-color);
+            text-shadow: var(--glow-shadow);
+        }
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;
+        }
+        .skill-card {
+            background: var(--card-color); border: 1px solid rgba(255, 217, 0, 0.2);
+            padding: 30px; text-align: center;
+            clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 217, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+        .skill-card i { font-size: 3rem; color: var(--primary-color); margin-bottom: 15px; }
+        .skill-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; }
+        
+        .footer { text-align: center; padding: 30px 0; margin-top: 60px; border-top: 1px solid rgba(255, 217, 0, 0.2); }
+        .footer span { color: var(--primary-color); font-family: 'Orbitron', sans-serif; }
+
+        @media (max-width: 900px) {
+            .hero .container { grid-template-columns: 1fr; text-align: center; }
+            .hero-text-content { order: 2; }
+            .hero-visual { order: 1; margin-bottom: 40px; }
+            .hexagon-frame { width: 300px; height: 342px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="corruption-overlay">
+        <div class="loading-container" id="loading-screen">
+            <div id="loading-logo"></div>
+            <p id="loading-text">SYSTEM BOOT</p>
+            <div id="progress-bar-container">
+                <div id="os-progress-bar"></div>
+            </div>
+        </div>
+        
+        <div class="warning-popup" id="warning1">
+            <h4><i class="fa-solid fa-triangle-exclamation"></i> WARNING</h4>
+            <p>Unidentified intrusion detected.<br>Firewall compromised.</p>
+        </div>
+        <div class="warning-popup" id="warning2">
+             <h4><i class="fa-solid fa-biohazard"></i> SYSTEM ALERT</h4>
+            <p>Core integrity failing...</p>
+        </div>
+
+        <div id="hacker-message">
+            <p>> YOUR SYSTEM IS MINE.</p>
+            <p>> WELCOME TO MY WORLD.</p>
+            <p>> - JGL</p>
+        </div>
+    </div>
+
+
+    <div class="main-content">
+        <header class="header">
+            <div class="container">
+                <a href="#" class="logo">JGL</a>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-text-content">
+                        <h1 class="hero-title" data-aos="fade-right">JG Legha</h1>
+                        <p class="hero-subtitle" data-aos="fade-right" data-aos-delay="200">Excel Expert // Python Developer // YouTuber</p>
+                        <a href="#skills" class="cta-button" data-aos="fade-right" data-aos-delay="400">Analyze Skills</a>
+                    </div>
+                    <div class="hero-visual" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="hexagon-frame">
+                            <img src="https://live.staticflickr.com/65535/54844410191_73b9b81752_z.jpg" alt="JG Legha Profile" class="profile-pic">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="section">
+                <div class="container">
+                    <h2 class="section-title" data-aos="fade-up">// CORE_PROTOCOLS</h2>
+                    <div class="skills-grid">
+                        <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
+                            <i class="fa-solid fa-file-excel"></i><h3>Excel Mastery</h3>
+                        </div>
+                        <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
+                            <i class="fa-brands fa-python"></i><h3>Python Scripting</h3>
+                        </div>
+                        <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
+                            <i class="fa-solid fa-code"></i><h3>Web Development</h3>
+                        </div>
+                        <div class="skill-card" data-aos="fade-up" data-aos-delay="400">
+                            <i class="fa-brands fa-youtube"></i><h3>Content Creation</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 <span>JG Legha</span> // Connection Terminated</p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('corruption-overlay');
+            const loadingScreen = document.getElementById('loading-screen');
+            const progressBar = document.getElementById('os-progress-bar');
+            const warning1 = document.getElementById('warning1');
+            const warning2 = document.getElementById('warning2');
+            const hackerMessage = document.getElementById('hacker-message');
+            const body = document.body;
+
+            // --- Intro Sequence Timeline ---
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                if (progress < 70) { // Let it load normally until 70%
+                    progress += 2;
+                    progressBar.style.width = progress + '%';
+                }
+            }, 50);
+
+            // 1. Freeze progress bar and start glitching
+            setTimeout(() => {
+                clearInterval(progressInterval);
+                loadingScreen.classList.add('glitch');
+            }, 2500);
+
+            // 2. Show warning popups
+            setTimeout(() => {
+                warning1.style.display = 'block';
+            }, 3000);
+
+            setTimeout(() => {
+                warning2.style.display = 'block';
+            }, 3500);
+
+            // 3. System takeover
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                warning1.style.display = 'none';
+                warning2.style.display = 'none';
+                hackerMessage.style.display = 'block';
+            }, 4500);
+
+            // 4. Hide overlay and show main site
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                body.classList.add('loaded');
+                AOS.init({
+                    duration: 1000,
+                    once: true,
+                    offset: 50,
+                });
+            }, 6500);
+        });
+    </script>
+</body>
+</html>
