@@ -3,269 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JG Legha // Accessing Mainframe...</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Jg Legha | Python & Automation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --primary-color: #ffd900; /* Cyber Yellow */
-            --background-color: #0d0d12; /* Deep Dark */
-            --card-color: #1a1a23;
-            --text-color: #d0d0d0;
-            --glow-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+        body { 
+            font-family: 'Nunito', sans-serif; 
+            background-color: #e0e5ec; 
+            color: #4a4a4a;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            overflow-y: hidden; 
-        }
-        body.loaded {
-            overflow-y: auto;
-        }
-
-        /* --- "SYSTEM CORRUPTION" INTRO --- */
-        #corruption-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000c1f; z-index: 9999; font-family: 'Share Tech Mono', monospace;
-            display: flex; justify-content: center; align-items: center;
-            flex-direction: column; color: #fff;
-            transition: opacity 1s ease-out;
-        }
-        #corruption-overlay.hidden { opacity: 0; pointer-events: none; }
-        .loading-container { text-align: center; width: 90%; }
-        #loading-logo {
-            width: 80px; height: 80px; border: 4px solid #fff;
-            border-radius: 50%; border-top-color: var(--primary-color);
-            animation: spin 1s linear infinite; margin: 0 auto 20px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        #loading-text { font-size: 1.2em; letter-spacing: 2px; }
-        #progress-bar-container { width: 100%; max-width: 400px; height: 10px; border: 1px solid #fff; margin: 20px auto 0; }
-        #os-progress-bar { width: 0%; height: 100%; background: #fff; transition: width 0.1s linear; }
-        .warning-popup {
-            position: absolute; background: #d0d0d0; color: #000;
-            border: 2px solid red; padding: 10px; display: none;
-            box-shadow: 0 0 15px red; width: 280px;
-        }
-        .warning-popup h4 { background: red; color: #fff; padding: 5px; margin: -10px -10px 10px -10px; }
-        #warning1 { top: 20%; left: 15%; }
-        #warning2 { top: 50%; right: 20%; }
-        .glitch { animation: glitch-effect 0.3s infinite; }
-        @keyframes glitch-effect { 0% { transform: translate(0); } 20% { transform: translate(-3px, 3px); } 40% { transform: translate(-3px, -3px); } 60% { transform: translate(3px, 3px); } 80% { transform: translate(3px, -3px); } 100% { transform: translate(0); } }
-        #hacker-message {
-            font-size: clamp(1.2rem, 5vw, 2.5rem); color: var(--primary-color);
-            text-align: center; text-shadow: var(--glow-shadow); display: none;
-            padding: 0 10px;
+        /* --- Soft UI / Neumorphism CSS --- */
+        .neu-box {
+            border-radius: 20px;
+            background: #e0e5ec;
+            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), 
+                       -9px -9px 16px rgba(255,255,255, 0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
         }
         
-        /* --- Main Content --- */
-        .main-content { opacity: 0; transition: opacity 1s ease 0.5s; }
-        body.loaded .main-content { opacity: 1; }
-        .container { max-width: 1200px; margin: auto; padding: 0 20px; }
-        .header { position: fixed; top: 0; width: 100%; padding: 20px 0; z-index: 1000; background: linear-gradient(to bottom, rgba(13, 13, 18, 0.8), transparent); }
-        .logo { font-family: 'Orbitron', sans-serif; font-weight: 900; color: var(--primary-color); font-size: 1.8rem; text-decoration: none; text-shadow: var(--glow-shadow); }
-        .hero { min-height: 100vh; display: flex; align-items: center; position: relative; background: url('https://www.transparenttextures.com/patterns/cubes.png'), var(--background-color); }
-        .hero .container { display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 50px; }
-        .hero-text-content { z-index: 2; }
-        .hero-title { font-family: 'Orbitron', sans-serif; font-size: clamp(2.5rem, 8vw, 5rem); color: #fff; text-shadow: var(--glow-shadow); margin-bottom: 10px; line-height: 1.1; }
-        .hero-subtitle { font-family: 'Share Tech Mono', monospace; font-size: clamp(1rem, 4vw, 1.5rem); color: var(--primary-color); margin-bottom: 30px; }
-        .cta-button { display: inline-block; font-family: 'Orbitron', sans-serif; background: var(--primary-color); color: #000; padding: 12px 30px; text-decoration: none; font-weight: 700; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); transition: transform 0.3s ease; }
-        .cta-button:hover { transform: scale(1.05); }
-        .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
-        .hexagon-frame { 
-            position: relative; 
-            width: clamp(280px, 90vw, 350px); 
-            height: clamp(320px, 103vw, 400px);
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); 
-            display: flex; justify-content: center; align-items: center; 
+        .neu-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 12px 12px 20px rgb(163,177,198,0.7), 
+                       -12px -12px 20px rgba(255,255,255, 0.6);
         }
-        .hexagon-frame::before { content: ''; position: absolute; inset: -3px; background: linear-gradient(45deg, var(--primary-color), #ff8800, var(--primary-color)); background-size: 200% 200%; animation: gradient-flow 5s ease infinite; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); z-index: 1; }
-        @keyframes gradient-flow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        .hexagon-frame .profile-pic { position: relative; width: 98%; height: 98%; object-fit: cover; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); z-index: 2; }
-        .section { padding: 100px 0; }
-        .section-title { font-family: 'Orbitron', sans-serif; text-align: center; font-size: 2.5rem; margin-bottom: 60px; color: var(--primary-color); text-shadow: var(--glow-shadow); }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .skill-card { background: var(--card-color); border: 1px solid rgba(255, 217, 0, 0.2); padding: 30px; text-align: center; clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .skill-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255, 217, 0, 0.1); border-color: var(--primary-color); }
-        .skill-card i { font-size: 3rem; color: var(--primary-color); margin-bottom: 15px; }
-        .skill-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .project-link-card { display: block; text-decoration: none; background: var(--card-color); border: 1px solid rgba(255, 217, 0, 0.2); padding: 25px 30px; text-align: center; clip-path: polygon(10% 0, 100% 0, 100% 85%, 90% 100%, 0 100%, 0 15%); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .project-link-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(255, 217, 0, 0.1); border-color: var(--primary-color); }
-        .project-link-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--primary-color); margin: 0; }
-        .project-link-card i { font-size: 1rem; color: var(--text-color); margin-left: 10px; transition: transform 0.3s ease; }
-        .project-link-card:hover i { transform: translateX(5px); }
-        .footer { text-align: center; padding: 40px 0; margin-top: 60px; border-top: 1px solid rgba(255, 217, 0, 0.2); }
-        .footer-social-links { display: flex; justify-content: center; gap: 25px; margin-bottom: 25px; }
-        .footer-social-links .social-link { font-size: 1.8rem; color: var(--text-color); transition: all 0.3s ease; }
-        .footer-social-links .social-link:hover { color: var(--primary-color); transform: translateY(-5px); text-shadow: var(--glow-shadow); }
-        .footer p { font-family: 'Share Tech Mono', monospace; }
-        .footer span { color: var(--primary-color); font-family: 'Orbitron', sans-serif; }
 
-        /* --- MOBILE FRIENDLY STYLES --- */
-        @media (max-width: 900px) {
-            .hero .container { grid-template-columns: 1fr; text-align: center; }
-            .hero-text-content { order: 2; margin-top: 40px; }
-            .hero-visual { order: 1; }
+        /* Inputs (Pressed Look) */
+        .neu-pressed {
+            border-radius: 15px;
+            background: #e0e5ec;
+            box-shadow: inset 6px 6px 10px 0 rgba(163,177,198, 0.7), 
+                       inset -6px -6px 10px 0 rgba(255,255,255, 0.8);
+            border: none;
         }
-        @media (max-width: 600px) {
-            #warning1, #warning2 {
-                position: relative;
-                top: auto; left: auto; right: auto;
-                margin: 15px auto;
-                width: 90%;
-            }
-            .loading-container {
-                display: flex; flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
+
+        /* Round Buttons (Socials) */
+        .neu-btn {
+            width: 50px; height: 50px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: #e0e5ec;
+            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), 
+                       -6px -6px 10px 0 rgba(255,255,255, 0.8);
+            color: #555;
+            transition: 0.2s;
+        }
+        .neu-btn:hover {
+            color: #007bff; /* Blue hover */
+            box-shadow: inset 4px 4px 8px 0 rgba(163,177,198, 0.7), 
+                       inset -4px -4px 8px 0 rgba(255,255,255, 0.8);
+        }
+        .neu-btn.insta:hover { color: #E1306C; } /* Pink hover for Insta */
+        .neu-btn.wa:hover { color: #25D366; }   /* Green hover for WA */
+
+        /* Main Blue Action Button */
+        .neu-action {
+            background: linear-gradient(145deg, #007bff, #0062cc);
+            color: white;
+            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), 
+                       -6px -6px 10px 0 rgba(255,255,255, 0.8);
+        }
+        .neu-action:hover {
+            background: linear-gradient(145deg, #0062cc, #007bff);
+        }
+
+        /* Image Styling */
+        .profile-img-container {
+            padding: 10px;
+            border-radius: 50%;
+            background: #e0e5ec;
+            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
+        }
+        .profile-img {
+            width: 100%; height: 100%; 
+            border-radius: 50%; object-fit: cover;
+            border: 5px solid #e0e5ec;
         }
     </style>
 </head>
-<body>
+<body class="py-8 px-4 selection:bg-blue-200 selection:text-blue-900">
 
-    <div id="corruption-overlay">
-        <div class="loading-container" id="loading-screen">
-            <div id="loading-logo"></div>
-            <p id="loading-text">SYSTEM BOOT</p>
-            <div id="progress-bar-container">
-                <div id="os-progress-bar"></div>
-            </div>
+    <nav class="max-w-6xl mx-auto flex justify-between items-center mb-16 px-4">
+        <div class="text-2xl font-extrabold text-gray-700 tracking-wider">
+            JG<span class="text-blue-600">.DEV</span>
         </div>
-        <div class="warning-popup" id="warning1">
-            <h4><i class="fa-solid fa-triangle-exclamation"></i> WARNING</h4>
-            <p>Unidentified intrusion detected.<br>Firewall compromised.</p>
+        <div class="flex gap-6">
+            <a href="https://www.instagram.com/mr_jg_choudhary/?igsh=MWw4a2IwaDU3ODV4MQ%3D%3D" target="_blank" class="neu-btn insta">
+                <i class="fa-brands fa-instagram text-xl"></i>
+            </a>
+            <a href="https://wa.me/918094251586" target="_blank" class="neu-btn wa">
+                <i class="fa-brands fa-whatsapp text-xl"></i>
+            </a>
         </div>
-        <div class="warning-popup" id="warning2">
-             <h4><i class="fa-solid fa-biohazard"></i> SYSTEM ALERT</h4>
-            <p>Core integrity failing...</p>
-        </div>
-        <div id="hacker-message">
-            <p>> YOUR SYSTEM IS MINE.</p>
-            <p>> WELCOME TO MY WORLD.</p>
-            <p>> - JGL</p>
-        </div>
-    </div>
+    </nav>
 
-    <div class="main-content">
-        <header class="header">
-            <div class="container">
-                <a href="#" class="logo">JGL</a>
-            </div>
-        </header>
-
-        <main>
-            <section class="hero">
-                <div class="container">
-                    <div class="hero-text-content">
-                        <h1 class="hero-title" data-aos="fade-up">JG Legha</h1>
-                        <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">Excel Expert // Python Developer // YouTuber</p>
-                        <a href="#skills" class="cta-button" data-aos="fade-up" data-aos-delay="400">Analyze Skills</a>
-                    </div>
-                    <div class="hero-visual" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="hexagon-frame">
-                            <img src="https://live.staticflickr.com/65535/54844410191_73b9b81752_z.jpg" alt="JG Legha Profile" class="profile-pic">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="skills" class="section">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">// CORE_PROTOCOLS</h2>
-                    <div class="skills-grid">
-                        <div class="skill-card" data-aos="fade-up" data-aos-delay="100"><i class="fa-solid fa-file-excel"></i><h3>Excel Mastery</h3></div>
-                        <div class="skill-card" data-aos="fade-up" data-aos-delay="200"><i class="fa-brands fa-python"></i><h3>Python Scripting</h3></div>
-                        <div class="skill-card" data-aos="fade-up" data-aos-delay="300"><i class="fa-solid fa-code"></i><h3>Web Development</h3></div>
-                        <div class="skill-card" data-aos="fade-up" data-aos-delay="400"><i class="fa-brands fa-youtube"></i><h3>Content Creation</h3></div>
-                    </div>
-                </div>
-            </section>
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+        
+        <div class="order-2 md:order-1 text-center md:text-left">
+            <h2 class="text-xl font-bold text-blue-600 mb-2">Hello, I am Jg Legha</h2>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-800 leading-tight mb-6">
+                Python & <br>Automation
+            </h1>
+            <p class="text-gray-500 text-lg mb-8 leading-relaxed">
+                I build custom software, manage websites, and automate boring tasks using Python and Excel.
+            </p>
             
-            <section id="projects" class="section">
-                <div class="container">
-                    <h2 class="section-title" data-aos="fade-up">// DEPLOYED_PROJECTS</h2>
-                    <div class="projects-grid">
-                        <a href="https://www.kanodgramsewasahkarisamiti.live/#" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="100">
-                            <h3>My First Website <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
-                        </a>
-                        <a href="https://terahmsafar.blogspot.com/" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="200">
-                            <h3>My 2 Website <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
-                        </a>
-                        <a href="https://vishallegha.blogspot.com/" target="_blank" class="project-link-card" data-aos="fade-up" data-aos-delay="300">
-                            <h3>My 3 Website <i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
-                        </a>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="footer">
-            <div class="footer-social-links">
-                <a href="#" class="social-link" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="social-link" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#" class="social-link" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="#" class="social-link" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <div class="flex gap-6 justify-center md:justify-start">
+                <a href="#contact" class="px-8 py-4 rounded-full font-bold neu-action transition transform hover:-translate-y-1">
+                    Hire Me Now
+                </a>
+                <a href="#projects" class="px-8 py-4 rounded-full font-bold text-gray-600 neu-box hover:text-blue-600">
+                    My Work
+                </a>
             </div>
-            <p>&copy; 2025 <span>JG Legha</span> // Connection Terminated</p>
-        </footer>
+        </div>
+
+        <div class="order-1 md:order-2 flex justify-center">
+            <div class="w-72 h-72 md:w-96 md:h-96 profile-img-container">
+                <img src="https://live.staticflickr.com/65535/54995321363_7dff03f8da_z.jpg" 
+                     alt="Jg Legha" class="profile-img">
+            </div>
+        </div>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <div id="projects" class="max-w-6xl mx-auto mb-24 px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-700 mb-12">My Live Projects</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <a href="https://www.kanodgramsewasahkarisamiti.live/" target="_blank" class="neu-box p-8 flex items-center gap-6 group">
+                <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl shadow-inner">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-700 group-hover:text-blue-600 transition">Kanod Gram Sewa Samiti</h3>
+                    <p class="text-sm text-gray-500 mt-1">Official Cooperative Portal</p>
+                </div>
+                <div class="ml-auto text-gray-400 group-hover:translate-x-1 transition"><i class="fa-solid fa-chevron-right"></i></div>
+            </a>
+
+            <a href="https://terahmsafar.blogspot.com/" target="_blank" class="neu-box p-8 flex items-center gap-6 group">
+                <div class="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 text-2xl shadow-inner">
+                    <i class="fa-solid fa-feather-pointed"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-gray-700 group-hover:text-pink-500 transition">Tera Hmsafar</h3>
+                    <p class="text-sm text-gray-500 mt-1">Shayari & Thoughts Blog</p>
+                </div>
+                <div class="ml-auto text-gray-400 group-hover:translate-x-1 transition"><i class="fa-solid fa-chevron-right"></i></div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto mb-24 px-4">
+        <h2 class="text-3xl font-bold text-center text-gray-700 mb-12">My Skills</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40">
+                <i class="fa-brands fa-python text-4xl text-blue-600 mb-3"></i>
+                <h3 class="font-bold text-gray-600">Python</h3>
+            </div>
+            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40">
+                <i class="fa-solid fa-file-excel text-4xl text-green-600 mb-3"></i>
+                <h3 class="font-bold text-gray-600">Excel VBA</h3>
+            </div>
+            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40">
+                <i class="fa-solid fa-robot text-4xl text-gray-600 mb-3"></i>
+                <h3 class="font-bold text-gray-600">Automation</h3>
+            </div>
+            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40">
+                <i class="fa-solid fa-code text-4xl text-yellow-500 mb-3"></i>
+                <h3 class="font-bold text-gray-600">Web Dev</h3>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="max-w-2xl mx-auto">
+        <div class="neu-box p-8 md:p-12">
+            <h2 class="text-3xl font-bold text-center text-gray-700 mb-2">Work With Me</h2>
+            <p class="text-center text-gray-500 mb-8">Direct WhatsApp Messaging</p>
+
+            <form onsubmit="sendWhatsapp(event)" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-bold text-gray-600 mb-2 ml-1">Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required class="w-full p-4 neu-pressed text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-bold text-gray-600 mb-2 ml-1">Message</label>
+                    <textarea id="message" rows="4" placeholder="How can I help you?" required class="w-full p-4 neu-pressed text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 rounded-xl font-bold text-lg neu-action transition transform active:scale-95 flex justify-center items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i> Send to WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="text-center mt-16 pb-8 text-gray-500 text-sm">
+        <p>&copy; 2025 Jg Legha Portfolio.</p>
+    </footer>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const overlay = document.getElementById('corruption-overlay');
-            const loadingScreen = document.getElementById('loading-screen');
-            const progressBar = document.getElementById('os-progress-bar');
-            const warning1 = document.getElementById('warning1');
-            const warning2 = document.getElementById('warning2');
-            const hackerMessage = document.getElementById('hacker-message');
-            const body = document.body;
-
-            let progress = 0;
-            const progressInterval = setInterval(() => {
-                if (progress < 70) {
-                    progress += 2;
-                    progressBar.style.width = progress + '%';
-                }
-            }, 50);
-
-            setTimeout(() => {
-                clearInterval(progressInterval);
-                loadingScreen.classList.add('glitch');
-            }, 2500);
-
-            setTimeout(() => { warning1.style.display = 'block'; }, 3000);
-            setTimeout(() => { warning2.style.display = 'block'; }, 3500);
-
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-                warning1.style.display = 'none';
-                warning2.style.display = 'none';
-                hackerMessage.style.display = 'block';
-            }, 4500);
-
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-                body.classList.add('loaded');
-                AOS.init({
-                    duration: 1000,
-                    once: true,
-                    offset: 50,
-                });
-            }, 6500);
-        });
+        function sendWhatsapp(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('message').value;
+            const phone = "918094251586";
+            
+            const url = `https://wa.me/${phone}?text=*New Inquiry*%0A%0AName: ${name}%0AMessage: ${message}`;
+            window.open(url, '_blank');
+        }
     </script>
+
 </body>
 </html>
