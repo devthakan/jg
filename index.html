@@ -3,113 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jg Legha | Automation Store</title>
+    <title>Jg Legha | Automation Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         body { font-family: 'Nunito', sans-serif; background-color: #e0e5ec; color: #4a4a4a; }
-
-        /* --- Soft UI / Neumorphism CSS --- */
-        .neu-box {
-            border-radius: 20px;
-            background: #e0e5ec;
-            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: all 0.3s ease;
-        }
-        .neu-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 12px 12px 20px rgb(163,177,198,0.7), -12px -12px 20px rgba(255,255,255, 0.6);
-        }
-
-        /* Buttons */
-        .neu-btn {
-            width: 50px; height: 50px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            background: #e0e5ec;
-            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8);
-            color: #555; transition: 0.2s;
-        }
+        .neu-box { border-radius: 20px; background: #e0e5ec; box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5); border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s ease; }
+        .neu-box:hover { transform: translateY(-5px); box-shadow: 12px 12px 20px rgb(163,177,198,0.7), -12px -12px 20px rgba(255,255,255, 0.6); }
+        .neu-btn { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #e0e5ec; box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8); color: #555; transition: 0.2s; }
         .neu-btn:hover { color: #007bff; box-shadow: inset 4px 4px 8px 0 rgba(163,177,198, 0.7), inset -4px -4px 8px 0 rgba(255,255,255, 0.8); }
-
-        /* Buy Button (Green) */
-        .neu-buy {
-            background: #e0e5ec; color: #16a34a; font-weight: 800;
-            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8);
-            transition: 0.2s;
-        }
-        .neu-buy:hover {
-            background: #16a34a; color: white;
-            box-shadow: inset 4px 4px 8px 0 rgba(0,0,0,0.2);
-        }
-
-        /* Main Action Button (Blue) */
-        .neu-action {
-            background: linear-gradient(145deg, #007bff, #0062cc); color: white;
-            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8);
-        }
+        .neu-buy { background: #e0e5ec; color: #16a34a; font-weight: 800; box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8); transition: 0.2s; }
+        .neu-buy:hover { background: #16a34a; color: white; box-shadow: inset 4px 4px 8px 0 rgba(0,0,0,0.2); }
+        .neu-action { background: linear-gradient(145deg, #007bff, #0062cc); color: white; box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8); }
         .neu-action:hover { background: linear-gradient(145deg, #0062cc, #007bff); }
-
-        /* Inputs */
-        .neu-pressed {
-            border-radius: 15px; background: #e0e5ec;
-            box-shadow: inset 6px 6px 10px 0 rgba(163,177,198, 0.7), inset -6px -6px 10px 0 rgba(255,255,255, 0.8);
-            border: none;
-        }
-
-        /* Profile Image */
-        .profile-img-container {
-            padding: 10px; border-radius: 50%; background: #e0e5ec;
-            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
-        }
+        .neu-pressed { border-radius: 15px; background: #e0e5ec; box-shadow: inset 6px 6px 10px 0 rgba(163,177,198, 0.7), inset -6px -6px 10px 0 rgba(255,255,255, 0.8); border: none; }
         .profile-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 5px solid #e0e5ec; }
-
-        /* Product Image (Height Increased here) */
-        .product-img {
-            width: 100%; 
-            height: 350px; /* Height increased from 250px to 350px */
-            object-fit: cover; border-radius: 15px;
-            box-shadow: inset 4px 4px 8px 0 rgba(163,177,198, 0.5);
-            border: 4px solid #e0e5ec;
-        }
-
-        /* Accordion Animation */
+        .product-img { width: 100%; height: 350px; object-fit: cover; border-radius: 15px; box-shadow: inset 4px 4px 8px 0 rgba(163,177,198, 0.5); border: 4px solid #e0e5ec; }
         .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, opacity 0.5s ease; opacity: 0; }
         .accordion-content.open { max-height: 1000px; opacity: 1; }
-        .rotate-icon { transition: transform 0.3s; }
-        .rotate-icon.open { transform: rotate(180deg); }
     </style>
 </head>
 <body class="py-8 px-4 selection:bg-blue-200 selection:text-blue-900">
 
     <nav class="max-w-6xl mx-auto flex justify-between items-center mb-16 px-4">
-        <div class="text-2xl font-extrabold text-gray-700 tracking-wider">
-            JG<span class="text-blue-600">.DEV</span>
-        </div>
+        <div class="text-2xl font-extrabold text-gray-700 tracking-wider">JG<span class="text-blue-600">.DEV</span></div>
         <div class="flex gap-6">
-            <a href="https://www.instagram.com/mr_jg_choudhary/?igsh=MWw4a2IwaDU3ODV4MQ%3D%3D" target="_blank" class="neu-btn insta"><i class="fa-brands fa-instagram text-xl"></i></a>
-            <a href="https://wa.me/918094251586" target="_blank" class="neu-btn wa"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+            <a href="https://www.instagram.com/mr_jg_choudhary/?igsh=MWw4a2IwaDU3ODV4MQ%3D%3D" target="_blank" class="neu-btn"><i class="fa-brands fa-instagram text-xl"></i></a>
+            <a href="https://wa.me/918094251586" target="_blank" class="neu-btn"><i class="fa-brands fa-whatsapp text-xl"></i></a>
         </div>
     </nav>
 
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
         <div class="order-2 md:order-1 text-center md:text-left">
             <h2 class="text-xl font-bold text-blue-600 mb-2">Hello, I am Jg Legha</h2>
-            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-800 leading-tight mb-6">
-                Python & <br>Automation
-            </h1>
-            <p class="text-gray-500 text-lg mb-8 leading-relaxed">
-                Expert Developer. I sell premium automation software and build custom tools to save your time.
-            </p>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-800 leading-tight mb-6">Python & <br>Automation</h1>
+            <p class="text-gray-500 text-lg mb-8 leading-relaxed">Expert Developer. I sell premium automation software and build custom tools to save your time.</p>
             <div class="flex gap-6 justify-center md:justify-start">
                 <a href="#store" class="px-8 py-4 rounded-full font-bold neu-action transition transform hover:-translate-y-1">Buy Software</a>
                 <a href="#contact" class="px-8 py-4 rounded-full font-bold text-gray-600 neu-box hover:text-blue-600">Hire Me</a>
             </div>
         </div>
         <div class="order-1 md:order-2 flex justify-center">
-            <div class="w-72 h-72 md:w-96 md:h-96 profile-img-container">
+            <div class="w-72 h-72 md:w-96 md:h-96 p-2 rounded-full bg-[#e0e5ec] shadow-[9px_9px_16px_rgb(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)]">
                 <img src="https://live.staticflickr.com/65535/54995321363_7dff03f8da_z.jpg" alt="Jg Legha" class="profile-img">
             </div>
         </div>
@@ -118,170 +55,99 @@
     <div class="max-w-6xl mx-auto mb-24 px-4">
         <h2 class="text-3xl font-bold text-center text-gray-700 mb-12">My Expertise</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40">
-                <i class="fa-brands fa-python text-4xl text-blue-600 mb-3"></i>
-                <h3 class="font-bold text-gray-600">Python</h3>
-            </div>
-            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40">
-                <i class="fa-solid fa-file-excel text-4xl text-green-600 mb-3"></i>
-                <h3 class="font-bold text-gray-600">Excel VBA</h3>
-            </div>
-            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40">
-                <i class="fa-solid fa-robot text-4xl text-purple-500 mb-3"></i>
-                <h3 class="font-bold text-gray-600">Automation</h3>
-            </div>
-            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40">
-                <i class="fa-solid fa-code text-4xl text-yellow-500 mb-3"></i>
-                <h3 class="font-bold text-gray-600">Web Dev</h3>
-            </div>
+            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40"><i class="fa-brands fa-python text-4xl text-blue-600 mb-3"></i><h3 class="font-bold text-gray-600">Python</h3></div>
+            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40"><i class="fa-solid fa-file-excel text-4xl text-green-600 mb-3"></i><h3 class="font-bold text-gray-600">Excel VBA</h3></div>
+            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40"><i class="fa-solid fa-robot text-4xl text-purple-500 mb-3"></i><h3 class="font-bold text-gray-600">Automation</h3></div>
+            <div class="neu-box p-6 flex flex-col items-center justify-center text-center h-40"><i class="fa-solid fa-code text-4xl text-yellow-500 mb-3"></i><h3 class="font-bold text-gray-600">Web Dev</h3></div>
         </div>
     </div>
 
     <div id="store" class="max-w-6xl mx-auto mb-24 px-4">
         <h2 class="text-3xl font-bold text-center text-gray-700 mb-12">Buy Automation Software</h2>
-        
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
-            <div class="neu-box p-6 flex flex-col">
-                <img src="https://live.staticflickr.com/65535/54995234016_5342abd5be_z.jpg" class="product-img mb-4">
-                <h3 class="text-xl font-extrabold text-gray-700">PMFBY 2025</h3>
-                <p class="text-sm text-blue-600 font-bold mb-4">Automation Software</p>
-                <button onclick="buyProduct('PMFBY 2025')" class="mt-auto w-full py-3 rounded-xl neu-buy flex justify-center items-center gap-2">
-                    <i class="fa-brands fa-whatsapp"></i> Buy Now
-                </button>
-            </div>
-
-            <div class="neu-box p-6 flex flex-col">
-                <img src="https://live.staticflickr.com/65535/54995415393_fd196b0e43_z.jpg" class="product-img mb-4">
-                <h3 class="text-xl font-extrabold text-gray-700">PMFBY 2025</h3>
-                <p class="text-sm text-blue-600 font-bold mb-4">Automation Software</p>
-                <button onclick="buyProduct('PMFBY 2025')" class="mt-auto w-full py-3 rounded-xl neu-buy flex justify-center items-center gap-2">
-                    <i class="fa-brands fa-whatsapp"></i> Buy Now
-                </button>
-            </div>
-
-            <div class="neu-box p-6 flex flex-col">
-                <img src="https://live.staticflickr.com/65535/54995415798_580693941a_z.jpg" class="product-img mb-4">
-                <h3 class="text-xl font-extrabold text-gray-700">KRP Entry</h3>
-                <p class="text-sm text-blue-600 font-bold mb-4">Automation Software</p>
-                <button onclick="buyProduct('KRP Entry')" class="mt-auto w-full py-3 rounded-xl neu-buy flex justify-center items-center gap-2">
-                    <i class="fa-brands fa-whatsapp"></i> Buy Now
-                </button>
-            </div>
-
-            <div class="neu-box p-6 flex flex-col">
-                <img src="https://live.staticflickr.com/65535/54994353857_346b6cccb8_z.jpg" class="product-img mb-4">
-                <h3 class="text-xl font-extrabold text-gray-700">KRP Entry</h3>
-                <p class="text-sm text-blue-600 font-bold mb-4">Automation Software</p>
-                <button onclick="buyProduct('KRP Entry')" class="mt-auto w-full py-3 rounded-xl neu-buy flex justify-center items-center gap-2">
-                    <i class="fa-brands fa-whatsapp"></i> Buy Now
-                </button>
-            </div>
-
+            <div class="neu-box p-6 flex flex-col"><img src="https://live.staticflickr.com/65535/54995234016_5342abd5be_z.jpg" class="product-img mb-4"><h3 class="text-xl font-extrabold text-gray-700">PMFBY 2025</h3><p class="text-sm text-blue-600 font-bold mb-4">Automation Software</p><button onclick="buyProduct('PMFBY 2025')" class="mt-auto w-full py-3 rounded-xl neu-buy flex justify-center items-center gap-2"><i class="fa-brands fa-whatsapp"></i> Buy Now</button></div>
+            <div class="neu-box p-6 flex flex-col"><img src="https://live.staticflickr.com/65535/54995415393_fd196b0e43_z.jpg" class="product-img mb-4"><h3 class="text-xl font-extrabold text-gray-700">PMFBY 2025</h3><p class="text-sm text-blue-600 font-bold mb-4">Automation Software</p><button onclick="buyProduct('PMFBY 2025')" class="mt-auto w-full py-3 rounded-xl neu-buy flex justify-center items-center gap-2"><i class="fa-brands fa-whatsapp"></i> Buy Now</button></div>
+            <div class="neu-box p-6 flex flex-col"><img src="https://live.staticflickr.com/65535/54995415798_580693941a_z.jpg" class="product-img mb-4"><h3 class="text-xl font-extrabold text-gray-700">KRP Entry</h3><p class="text-sm text-blue-600 font-bold mb-4">Automation Software</p><button onclick="buyProduct('KRP Entry')" class="mt-auto w-full py-3 rounded-xl neu-buy flex justify-center items-center gap-2"><i class="fa-brands fa-whatsapp"></i> Buy Now</button></div>
+            <div class="neu-box p-6 flex flex-col"><img src="https://live.staticflickr.com/65535/54994353857_346b6cccb8_z.jpg" class="product-img mb-4"><h3 class="text-xl font-extrabold text-gray-700">KRP Entry</h3><p class="text-sm text-blue-600 font-bold mb-4">Automation Software</p><button onclick="buyProduct('KRP Entry')" class="mt-auto w-full py-3 rounded-xl neu-buy flex justify-center items-center gap-2"><i class="fa-brands fa-whatsapp"></i> Buy Now</button></div>
         </div>
     </div>
 
     <div class="max-w-4xl mx-auto mb-24 px-4">
         <button onclick="toggleProjects()" class="w-full neu-box p-6 flex justify-between items-center text-left hover:bg-gray-50 focus:outline-none">
-            <div>
-                <h2 class="text-2xl font-bold text-gray-700">👇 My Live Projects</h2>
-                <p class="text-gray-500 text-sm mt-1">Click to reveal websites</p>
-            </div>
-            <div id="toggle-icon" class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 rotate-icon">
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
+            <div><h2 class="text-2xl font-bold text-gray-700">👇 My Live Projects</h2><p class="text-gray-500 text-sm mt-1">Click to reveal websites</p></div>
+            <div id="toggle-icon" class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 transition duration-300"><i class="fa-solid fa-chevron-down"></i></div>
         </button>
-
         <div id="projects-container" class="accordion-content">
-            <div class="pt-8 grid grid-cols-1 md:grid-cols-2 gap-8" id="dynamic-project-list">
+            <div class="pt-8 grid grid-cols-1 md:grid-cols-2 gap-8" id="dynamic-project-list"></div>
+        </div>
+    </div>
+
+    <div id="contact" class="max-w-5xl mx-auto mb-24 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="neu-box p-8 flex flex-col justify-center">
+                <h2 class="text-2xl font-bold text-gray-700 mb-6">Contact Info</h2>
+                
+                <div class="space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"><i class="fa-solid fa-phone"></i></div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold uppercase">Mobile</p>
+                            <p class="text-gray-700 font-bold text-lg">8094251586</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"><i class="fa-solid fa-envelope"></i></div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold uppercase">Email</p>
+                            <p class="text-gray-700 font-bold text-lg">jglegha@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <p class="text-xs text-gray-500 font-bold uppercase">Address</p>
+                            <p class="text-gray-700 font-bold">Barmer, Rajasthan, India</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="neu-box p-8">
+                <h2 class="text-2xl font-bold text-center text-gray-700 mb-2">Send Message</h2>
+                <form onsubmit="sendWhatsapp(event)" class="space-y-4 mt-6">
+                    <input type="text" id="name" placeholder="Your Name" required class="w-full p-4 neu-pressed text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <textarea id="message" rows="4" placeholder="How can I help you?" required class="w-full p-4 neu-pressed text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
+                    <button type="submit" class="w-full py-4 rounded-xl font-bold text-lg neu-action transition transform active:scale-95 flex justify-center items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i> Send to WhatsApp
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <div id="contact" class="max-w-2xl mx-auto">
-        <div class="neu-box p-8 md:p-12">
-            <h2 class="text-3xl font-bold text-center text-gray-700 mb-2">Work With Me</h2>
-            <p class="text-center text-gray-500 mb-8">Direct WhatsApp Booking</p>
-            <form onsubmit="sendWhatsapp(event)" class="space-y-6">
-                <input type="text" id="name" placeholder="Your Name" required class="w-full p-4 neu-pressed text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <select id="service" class="w-full p-4 neu-pressed text-gray-700 focus:outline-none bg-transparent">
-                    <option>Select Service</option>
-                    <option>Python Development</option>
-                    <option>Excel Automation</option>
-                    <option>Web Dev</option>
-                </select>
-                <textarea id="message" rows="4" placeholder="How can I help you?" required class="w-full p-4 neu-pressed text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
-                <button type="submit" class="w-full py-4 rounded-xl font-bold text-lg neu-action transition transform active:scale-95 flex justify-center items-center gap-2">
-                    <i class="fa-brands fa-whatsapp text-2xl"></i> Send to WhatsApp
-                </button>
-            </form>
+    <footer class="text-center mt-16 pb-8 text-gray-500 text-sm border-t border-gray-300 pt-8">
+        <p class="mb-4">&copy; 2025 JG Legha Automation Solutions. All rights reserved.</p>
+        <div class="flex justify-center gap-6 text-blue-600 font-bold">
+            <a href="policies.html#privacy" class="hover:underline">Privacy Policy</a>
+            <a href="policies.html#terms" class="hover:underline">Terms & Conditions</a>
+            <a href="policies.html#refund" class="hover:underline">Refund Policy</a>
         </div>
-    </div>
-
-    <footer class="text-center mt-16 pb-8 text-gray-500 text-sm">
-        <p>&copy; 2025 Jg Legha Portfolio.</p>
     </footer>
 
     <script>
-        // 1. LIVE PROJECTS LIST
         const myProjects = [
-            { 
-                name: "Kanod Gram Sewa Samiti", 
-                info: "Official Portal", 
-                link: "https://www.kanodgramsewasahkarisamiti.live/", 
-                icon: "fa-building-columns", 
-                color: "text-blue-600",
-                bg: "bg-blue-100" 
-            },
-            { 
-                name: "Tera Hmsafar", 
-                info: "Shayari Blog", 
-                link: "https://terahmsafar.blogspot.com/", 
-                icon: "fa-feather-pointed", 
-                color: "text-pink-500", 
-                bg: "bg-pink-100" 
-            }
+            { name: "Kanod Gram Sewa Samiti", info: "Official Portal", link: "https://www.kanodgramsewasahkarisamiti.live/", icon: "fa-building-columns", color: "text-blue-600", bg: "bg-blue-100" },
+            { name: "Tera Hmsafar", info: "Shayari Blog", link: "https://terahmsafar.blogspot.com/", icon: "fa-feather-pointed", color: "text-pink-500", bg: "bg-pink-100" }
         ];
-
-        // 2. RENDER LIVE PROJECTS
         const projectList = document.getElementById('dynamic-project-list');
         myProjects.forEach(proj => {
-            projectList.innerHTML += `
-                <a href="${proj.link}" target="_blank" class="neu-box p-6 flex items-center gap-4 group hover:bg-white">
-                    <div class="w-14 h-14 rounded-full ${proj.bg} flex items-center justify-center ${proj.color} text-xl shadow-inner flex-shrink-0">
-                        <i class="fa-solid ${proj.icon}"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-700 group-hover:${proj.color}">${proj.name}</h3>
-                        <p class="text-xs text-gray-500">${proj.info}</p>
-                    </div>
-                </a>
-            `;
+            projectList.innerHTML += `<a href="${proj.link}" target="_blank" class="neu-box p-6 flex items-center gap-4 group hover:bg-white"><div class="w-14 h-14 rounded-full ${proj.bg} flex items-center justify-center ${proj.color} text-xl shadow-inner flex-shrink-0"><i class="fa-solid ${proj.icon}"></i></div><div><h3 class="font-bold text-gray-700 group-hover:${proj.color}">${proj.name}</h3><p class="text-xs text-gray-500">${proj.info}</p></div></a>`;
         });
-
-        // 3. TOGGLE PROJECTS
-        function toggleProjects() {
-            document.getElementById('projects-container').classList.toggle('open');
-            document.getElementById('toggle-icon').classList.toggle('open');
-        }
-
-        // 4. BUY PRODUCT WHATSAPP FUNCTION
-        function buyProduct(productName) {
-            const phone = "918094251586";
-            const text = `Hello Jg Legha,%0A%0AMuje ye software khareedna hai:%0A*Software Name:* ${productName}%0A%0APlease details share karein.`;
-            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
-        }
-
-        // 5. CONTACT FORM WHATSAPP FUNCTION
-        function sendWhatsapp(e) {
-            e.preventDefault();
-            const name = document.getElementById('name').value;
-            const service = document.getElementById('service').value;
-            const message = document.getElementById('message').value;
-            const phone = "918094251586";
-            const text = `*New Inquiry*%0A%0AName: ${name}%0AService: ${service}%0AMessage: ${message}`;
-            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
-        }
+        function toggleProjects() { document.getElementById('projects-container').classList.toggle('open'); document.getElementById('toggle-icon').classList.toggle('rotate-180'); }
+        function buyProduct(p) { window.open(`https://wa.me/918094251586?text=Hello Jg Legha,%0A%0AMuje ye software khareedna hai:%0A*Software Name:* ${p}%0A%0APlease details share karein.`, '_blank'); }
+        function sendWhatsapp(e) { e.preventDefault(); const n = document.getElementById('name').value; const m = document.getElementById('message').value; window.open(`https://wa.me/918094251586?text=*New Inquiry*%0A%0AName: ${n}%0AMessage: ${m}`, '_blank'); }
     </script>
 </body>
 </html>
