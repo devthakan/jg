@@ -1,66 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Order Portal | Automation Expert</title>
-    <meta name="theme-color" content="#0f172a">
+    <title>Samiti Data Entry Portal</title>
     <style>
-        /* Reset and Base Styles */
+        /* पेज की बेसिक सेटिंग */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            width: 100%;
-            overflow: hidden; /* Scrollbar hatane ke liye */
-            background-color: #0f172a; /* Background color match kiya hai */
-            font-family: system-ui, -apple-system, sans-serif;
+            overflow: hidden; /* डबल स्क्रोलबार हटाने के लिए */
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Full Screen Iframe */
+        /* Iframe सेटिंग (ताकि स्क्रिप्ट पूरी स्क्रीन पर दिखे) */
         iframe {
             width: 100%;
-            height: 100vh; /* Puri screen height */
+            height: 100%;
             border: none;
             display: block;
         }
 
-        /* Loading Spinner Styles */
+        /* लोडिंग स्क्रीन का डिज़ाइन */
         #loader {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #0f172a;
+            background-color: #ffffff;
+            z-index: 9999;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out;
+            flex-direction: column;
         }
 
+        /* स्पिनर एनीमेशन */
         .spinner {
             width: 50px;
             height: 50px;
-            border: 5px solid rgba(99, 102, 241, 0.3); /* Indigo Light */
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0d6efd; /* ब्लू कलर */
             border-radius: 50%;
-            border-top-color: #6366f1; /* Indigo Main */
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
         }
 
         .loading-text {
-            margin-top: 20px;
-            color: #94a3b8;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            color: #333;
+            font-size: 18px;
             font-weight: 600;
+            letter-spacing: 1px;
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -73,22 +71,22 @@
 
     <iframe 
         id="appFrame"
-        src="https://script.google.com/macros/s/AKfycbx57JkLASUvgZelZJMaHy9eEfUjPaEx4wFMjvBDMp8gJSRK5mUMkyGXQLqGmxYaS1zZ6g/exec"
-        allow="camera; microphone; autoplay; encrypted-media; fullscreen"
+        src="https://script.google.com/macros/s/AKfycbzgP4vSltgTmzZfvx8Hy5DLSq9cPGlhzURkgBCt6vnDNPeBwGAe_qvGu_J5iRQrQVYX6g/exec" 
         onload="hideLoader()">
     </iframe>
 
     <script>
-        // Hide loader when iframe is fully loaded
+        // लोडर को छिपाने वाला फंक्शन
         function hideLoader() {
-            const loader = document.getElementById('loader');
-            // Thoda delay diya taaki smooth lage
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 500);
-            }, 1000);
+            var loader = document.getElementById('loader');
+            
+            // थोड़ा स्मूथ ट्रांजीशन देने के लिए
+            loader.style.opacity = '0';
+            loader.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 500);
         }
     </script>
 
