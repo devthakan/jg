@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Access | JG LEGHA</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #eef1f6; 
+            --card-bg: #f8f9fb; 
+            --heading-color: #2b324b; 
+            --primary-blue: #3b68e7; 
+            --text-muted: #6b7280;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: var(--heading-color);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 800px;
+            width: 90%;
+            padding: 20px;
+        }
+
+        .action-card {
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--heading-color);
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05), -5px -5px 15px rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.08), -8px -8px 20px rgba(255, 255, 255, 0.9);
+        }
+
+        .icon-container {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 15px;
+            background: var(--bg-color);
+            box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.05), inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+        }
+
+        .icon-download { color: var(--primary-blue); }
+        .icon-society { color: #10b981; }
+        .icon-admin { color: #f43f5e; }
+        .icon-data { color: #f59e0b; }
+
+        .action-card h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Quick Access</h1>
+        <p>Select an option to continue</p>
+    </div>
+
+    <div class="grid-container">
+        <a href="https://www.mediafire.com/file/r5h988nhq04ty5c/dmr_ledger_app.exe/file" target="_blank" class="action-card">
+            <div class="icon-container icon-download">
+                <i class="fas fa-cloud-arrow-down"></i>
+            </div>
+            <h3>Download Software</h3>
+        </a>
+
+        <a href="https://jglegha1.pythonanywhere.com/login" target="_blank" class="action-card">
+            <div class="icon-container icon-society">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Login Society</h3>
+        </a>
+
+        <a href="https://jg2627.pythonanywhere.com/login" target="_blank" class="action-card">
+            <div class="icon-container icon-admin">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h3>Login Admin</h3>
+        </a>
+
+        <a href="https://jglegha.online/krp.html" class="action-card">
+            <div class="icon-container icon-data">
+                <i class="fas fa-keyboard"></i>
+            </div>
+            <h3>Order Data Entry</h3>
+        </a>
+    </div>
+
+</body>
+</html>
