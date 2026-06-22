@@ -77,8 +77,7 @@ async function buildPdf(name){
   if(J2){pdf.addPage();pdf.addImage(J2,'JPEG',0,0,210,297);}
   if(J3){pdf.addPage();pdf.addImage(J3,'JPEG',0,0,210,297);}
   const blob=pdf.output('blob');
-  const safe=name.replace(/[^\p{L}\p{N} _-]/gu,'').slice(0,40)||'mehman';
-  return new File([blob],`Aamantran-${safe}.pdf`,{type:'application/pdf'});
+  return new File([blob],`Invitation.pdf`,{type:'application/pdf'});
 }
 
 let busy=false;
