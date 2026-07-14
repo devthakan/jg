@@ -3,153 +3,110 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
-<title>Ramesh & Papu — Find Your Photos</title>
+<title>The Royal Photography — Find Your Photos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* =========================================================
-     BADAL SAKTE HO: naam/date niche HTML me | Backend URL JS me
-     ========================================================= */
-  :root{
-    --ink:#221f1c; --bg:#faf7f2; --card:#ffffff; --line:#ece5da;
-    --rose:#b06b54; --rose-soft:#f3e4dc; --muted:#9a9085; --gold:#a9874f;
-  }
+  :root{--ink:#1c1a17;--bg:#f7f4ee;--card:#fff;--line:#e8e0d3;--rose:#a65f47;--rose-soft:#f0e2da;--muted:#948a7d;--gold:#b08a4a;}
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   html{scroll-behavior:smooth}
-  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
-    line-height:1.55;-webkit-font-smoothing:antialiased;
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
     padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);}
   .wrap{max-width:760px;margin:0 auto;padding:0 18px}
-
-  header{text-align:center;padding:42px 0 20px}
-  .monogram{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.4em;
-    color:var(--gold);text-transform:uppercase;font-weight:600;
-    display:inline-flex;align-items:center;gap:12px;margin-bottom:16px;}
-  .monogram::before,.monogram::after{content:"";width:28px;height:1px;background:var(--gold);opacity:.5;}
-  h1{font-family:'Cormorant Garamond',serif;font-weight:500;
-    font-size:clamp(48px,17vw,96px);line-height:.9;letter-spacing:-.01em;}
-  h1 .amp{font-style:italic;color:var(--rose);font-weight:400;display:block;
-    font-size:.4em;margin:4px 0;}
-  .date{margin-top:18px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
-  .date span{color:var(--rose)}
-
-  .intro{text-align:center;max-width:400px;margin:26px auto 22px}
-  .intro h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:27px;margin-bottom:6px;}
-  .intro p{color:var(--muted);font-size:15px}
-
-  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;
-    padding:22px;margin:0 auto;max-width:440px;box-shadow:0 24px 50px -34px rgba(80,50,30,.45);}
-  .drop{border:1.5px dashed #ddd2c4;border-radius:15px;padding:32px 16px;text-align:center;
-    cursor:pointer;display:block;transition:.18s;}
+  .brand{display:flex;flex-direction:column;align-items:center;text-align:center;padding:26px 0 18px;border-bottom:1px solid var(--line)}
+  .brand .crest{width:42px;height:42px;color:var(--gold);margin-bottom:9px}
+  .brand .name{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(23px,6vw,30px);letter-spacing:.06em;line-height:1}
+  .brand .name b{color:var(--rose)}
+  .brand .tag{font-size:10px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);margin-top:8px;font-weight:600}
+  header{text-align:center;padding:48px 0 10px}
+  .monogram{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;font-weight:600;display:inline-flex;align-items:center;gap:12px;margin-bottom:18px;}
+  .monogram::before,.monogram::after{content:"";width:28px;height:1px;background:var(--gold);opacity:.55;}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(52px,15vw,90px);line-height:.92;letter-spacing:-.01em;}
+  h1 em{font-style:italic;color:var(--rose)}
+  .sub{margin:22px auto 0;max-width:420px;color:var(--muted);font-size:15.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin:30px auto 0;max-width:440px;box-shadow:0 24px 50px -34px rgba(80,50,30,.45);}
+  .drop{border:1.5px dashed #dccfbe;border-radius:15px;padding:32px 16px;text-align:center;cursor:pointer;display:block;transition:.18s;}
   .drop:active{border-color:var(--rose);background:var(--rose-soft)}
-  .drop .ic{width:58px;height:58px;border-radius:50%;background:var(--rose-soft);
-    display:flex;align-items:center;justify-content:center;margin:0 auto 13px;}
+  .drop .ic{width:58px;height:58px;border-radius:50%;background:var(--rose-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 13px;}
   .drop .ic svg{width:28px;height:28px;color:var(--rose)}
   .drop b{display:block;font-size:16px;font-weight:600;margin-bottom:3px}
   .drop span{font-size:13px;color:var(--muted)}
   input[type=file]{display:none}
-
   .preview{display:none;text-align:center;margin-top:16px}
-  .preview img{width:100px;height:100px;object-fit:cover;border-radius:50%;
-    border:3px solid #fff;box-shadow:0 8px 20px -10px rgba(0,0,0,.4);}
+  .preview img{width:100px;height:100px;object-fit:cover;border-radius:50%;border:3px solid #fff;box-shadow:0 8px 20px -10px rgba(0,0,0,.4);}
   .preview p{font-size:13px;color:var(--muted);margin-top:9px}
-  .retake{display:inline-block;margin-top:7px;font-size:12px;color:var(--rose);
-    text-decoration:underline;cursor:pointer;font-weight:500}
-
-  .btn{width:100%;margin-top:18px;border:none;cursor:pointer;background:var(--rose);
-    color:#fff;font-family:inherit;font-size:16px;font-weight:600;padding:16px;
-    border-radius:13px;transition:.15s;}
-  .btn:active{background:#9d5b45;transform:scale(.99)}
+  .retake{display:inline-block;margin-top:7px;font-size:12px;color:var(--rose);text-decoration:underline;cursor:pointer;font-weight:500}
+  .btn{width:100%;margin-top:18px;border:none;cursor:pointer;background:var(--rose);color:#fff;font-family:inherit;font-size:16px;font-weight:600;padding:16px;border-radius:13px;transition:.15s;}
+  .btn:active{background:#8f4f39;transform:scale(.99)}
   .btn:disabled{opacity:.4;cursor:default}
-
   .status{text-align:center;margin:34px 0;color:var(--muted);font-size:15px;display:none}
-  .spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--rose);
-    border-radius:50%;margin:0 auto 14px;animation:spin 1s linear infinite;}
+  .spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--rose);border-radius:50%;margin:0 auto 14px;animation:spin 1s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg)}}
-
-  .results{margin:32px 0 20px}
+  .results{margin:34px 0 20px}
   .count{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;text-align:center;}
   .count small{display:block;font-family:'Inter';font-size:13px;font-weight:400;color:var(--muted);margin-top:5px;}
   .grid{display:grid;gap:8px;margin-top:22px;grid-template-columns:repeat(3,1fr);}
   @media(min-width:560px){.grid{grid-template-columns:repeat(4,1fr)}}
   @media(min-width:720px){.grid{grid-template-columns:repeat(5,1fr)}}
-  .tile{position:relative;aspect-ratio:1;border-radius:11px;overflow:hidden;cursor:pointer;
-    background:var(--rose-soft);border:1px solid var(--line);}
+  .tile{position:relative;aspect-ratio:1;border-radius:11px;overflow:hidden;cursor:pointer;background:var(--rose-soft);border:1px solid var(--line);}
   .tile img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .4s}
   .tile img.loaded{opacity:1}
-
-  .lb{position:fixed;inset:0;background:rgba(24,18,14,.95);display:none;align-items:center;
-    justify-content:center;z-index:50;padding:16px;flex-direction:column}
+  .lb{position:fixed;inset:0;background:rgba(20,15,12,.95);display:none;align-items:center;justify-content:center;z-index:50;padding:16px;flex-direction:column}
   .lb.open{display:flex}
   .lb img{max-width:100%;max-height:72vh;border-radius:10px;box-shadow:0 24px 60px -20px rgba(0,0,0,.8)}
   .lb-actions{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-  .lb-actions a,.lb-actions button{font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;
-    border-radius:11px;padding:12px 22px;border:1px solid rgba(255,255,255,.28);
-    background:transparent;color:#fff;text-decoration:none;}
+  .lb-actions a,.lb-actions button{font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;border-radius:11px;padding:12px 22px;border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;text-decoration:none;}
   .lb-actions .dl{background:var(--rose);border-color:var(--rose)}
   .lb-close{position:absolute;top:14px;right:18px;color:#fff;font-size:34px;cursor:pointer;line-height:1;opacity:.85}
-
   footer{margin-top:44px;border-top:1px solid var(--line);padding:28px 18px 42px;text-align:center}
   .thanks{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--ink);margin-bottom:6px}
   .privacy{font-size:12px;color:var(--muted);margin-bottom:20px;max-width:340px;margin-left:auto;margin-right:auto}
-  .credit{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;
-    border-radius:30px;padding:9px 16px;font-size:13px;margin-bottom:14px}
-  .credit .jg{font-family:'Cormorant Garamond',serif;font-weight:600;background:var(--rose);
-    color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;
-    justify-content:center;font-size:14px;}
-  .insta{display:flex;align-items:center;justify-content:center;gap:8px;
-    color:var(--rose);text-decoration:none;font-size:14px;font-weight:600;margin-top:4px}
+  .studio-credit{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink);margin-bottom:12px}
+  .studio-credit b{color:var(--rose)}
+  .credit{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;border-radius:30px;padding:9px 16px;font-size:13px;margin-bottom:14px}
+  .credit .jg{font-family:'Cormorant Garamond',serif;font-weight:600;background:var(--rose);color:#fff;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;}
+  .insta{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--rose);text-decoration:none;font-size:14px;font-weight:600;margin-top:4px}
   .insta svg{width:19px;height:19px}
 </style>
 </head>
 <body>
-
 <div class="wrap">
-  <header>
-    <!-- ===== NAAM / DATE YAHAN BADLO ===== -->
-    <div class="monogram">The Wedding Of</div>
-    <h1>Ramesh<span class="amp">&amp;</span>Papu</h1>
-    <div class="date">A Celebration of Love &nbsp;&middot;&nbsp; <span>Forever Begins</span></div>
-    <!-- =================================== -->
-  </header>
-
-  <div class="intro">
-    <h2>Find your photos</h2>
-    <p>Take a quick selfie &mdash; we'll instantly gather every photo you're in from the celebration.</p>
+  <div class="brand">
+    <svg class="crest" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l3.5 2L12 3l5.5 6L21 7l-1.5 11h-15L3 7z"/><circle cx="12" cy="13" r="2.4"/></svg>
+    <div class="name">The <b>Royal</b> Photography</div>
+    <div class="tag">Capturing Moments &middot; Forever</div>
   </div>
+
+  <header>
+    <div class="monogram">Photo Gallery</div>
+    <h1>Find <em>Your</em><br>Photos</h1>
+    <p class="sub">Take a quick selfie &mdash; we'll instantly gather every photo you're in from the celebration.</p>
+  </header>
 
   <div class="card">
     <label class="drop" id="drop">
-      <span class="ic">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-      </span>
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
       <b>Tap to take a selfie</b>
       <span>Your camera will open</span>
-      <!-- capture="user" = front camera (selfie only, gallery nahi) -->
       <input type="file" id="file" accept="image/*" capture="user" />
     </label>
-
     <div class="preview" id="preview">
       <img id="previewImg" alt="your selfie" />
       <p id="previewName">Ready to search</p>
       <span class="retake" id="retake">Retake selfie</span>
     </div>
-
     <button class="btn" id="searchBtn" disabled>Find my photos</button>
   </div>
 
-  <div class="status" id="status">
-    <div class="spinner"></div>
-    <div id="statusText">Looking through the album&hellip;</div>
-  </div>
-
+  <div class="status" id="status"><div class="spinner"></div><div id="statusText">Looking through the album&hellip;</div></div>
   <div class="results" id="results"></div>
 </div>
 
 <footer>
   <div class="thanks">Thank you for celebrating with us</div>
   <div class="privacy">Your selfie is used only to find your photos &mdash; it is never saved.</div>
+  <div class="studio-credit">Photography by <b>The Royal Photography</b></div>
   <div class="credit"><span class="jg">JG</span> Designed &amp; developed by <b>JG</b></div>
   <a class="insta" href="https://www.instagram.com/mr_jg_choudhary/" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/></svg>
@@ -160,80 +117,64 @@
 <div class="lb" id="lb">
   <span class="lb-close" id="lbClose">&times;</span>
   <img id="lbImg" alt="photo" />
-  <div class="lb-actions">
-    <a href="#" target="_blank" id="lbOpen">View</a>
-    <button class="dl" id="lbDownload">Download</button>
-  </div>
+  <div class="lb-actions"><a href="#" target="_blank" id="lbOpen">View</a><button class="dl" id="lbDownload">Download</button></div>
 </div>
 
 <script>
-  // ====== BACKEND URL (tumhara HF Space) ======
+  // ============ YEH 2 CHEEZEIN SET KARO ============
   const BACKEND = "https://jg2628-face-finder.hf.space";
-  // =============================================
-
-  const fileInput=document.getElementById('file'),drop=document.getElementById('drop'),
-        preview=document.getElementById('preview'),previewImg=document.getElementById('previewImg'),
-        searchBtn=document.getElementById('searchBtn'),status=document.getElementById('status'),
-        statusText=document.getElementById('statusText'),results=document.getElementById('results'),
-        retake=document.getElementById('retake');
+  const EVENT   = "main";
+  // ================================================
+  const fileInput=document.getElementById('file'),preview=document.getElementById('preview'),
+        previewImg=document.getElementById('previewImg'),searchBtn=document.getElementById('searchBtn'),
+        status=document.getElementById('status'),statusText=document.getElementById('statusText'),
+        results=document.getElementById('results'),retake=document.getElementById('retake');
   let chosenFile=null;
-
-  fileInput.addEventListener('change',function(e){
-    const f=e.target.files[0]; if(!f)return;
-    chosenFile=f; previewImg.src=URL.createObjectURL(f);
-    preview.style.display='block'; searchBtn.disabled=false;
-  });
+  fileInput.addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;
+    chosenFile=f;previewImg.src=URL.createObjectURL(f);preview.style.display='block';searchBtn.disabled=false;});
   retake.addEventListener('click',function(e){e.preventDefault();fileInput.value='';fileInput.click();});
-
   searchBtn.addEventListener('click',async function(){
     if(!chosenFile)return;
-    results.innerHTML=''; status.style.display='block';
-    statusText.textContent="Looking through the album\u2026"; searchBtn.disabled=true;
-    const form=new FormData(); form.append('file',chosenFile);
+    results.innerHTML='';status.style.display='block';
+    statusText.textContent="Looking through the album\u2026";searchBtn.disabled=true;
+    var form=new FormData();form.append('file',chosenFile);
     try{
-      const res=await fetch(BACKEND+'/find',{method:'POST',body:form});
-      const data=await res.json();
-      status.style.display='none'; searchBtn.disabled=false;
+      var res=await fetch(BACKEND+'/find?event='+encodeURIComponent(EVENT),{method:'POST',body:form});
+      var data=await res.json();
+      status.style.display='none';searchBtn.disabled=false;
       if(!data.matches||data.matches.length===0){
-        const msg=data.message||"Try a clearer, front-facing selfie.";
-        results.innerHTML='<div class="count">No photos found<small>'+msg+'</small></div>';
-        return;
+        var msg=data.message||"Try a clearer, front-facing selfie.";
+        results.innerHTML='<div class="count">No photos found<small>'+msg+'</small></div>';return;
       }
       render(data.matches);
     }catch(err){
-      status.style.display='none'; searchBtn.disabled=false;
+      status.style.display='none';searchBtn.disabled=false;
       results.innerHTML='<div class="count">Something went wrong<small>Could not reach the server. Please try again.</small></div>';
     }
   });
-
   function render(matches){
-    const head=document.createElement('div'); head.className='count';
+    var head=document.createElement('div');head.className='count';
     head.innerHTML=matches.length+' photo'+(matches.length>1?'s':'')+' found<small>Tap a photo to view &amp; download</small>';
     results.appendChild(head);
-    const grid=document.createElement('div'); grid.className='grid';
+    var grid=document.createElement('div');grid.className='grid';
     matches.forEach(function(m){
-      const tile=document.createElement('div'); tile.className='tile';
-      const img=document.createElement('img'); img.loading='lazy';
-      img.src=m.thumb||m.url; img.onload=function(){img.classList.add('loaded')};
-      tile.appendChild(img); tile.addEventListener('click',function(){openLightbox(m.url)});
+      var tile=document.createElement('div');tile.className='tile';
+      var img=document.createElement('img');img.loading='lazy';img.src=m.thumb||m.url;
+      img.onload=function(){img.classList.add('loaded')};
+      tile.appendChild(img);tile.addEventListener('click',function(){openLightbox(m.url)});
       grid.appendChild(tile);
     });
     results.appendChild(grid);
   }
-
-  const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),
-        lbOpen=document.getElementById('lbOpen'),lbDownload=document.getElementById('lbDownload');
-  let currentUrl='';
+  var lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg'),
+      lbOpen=document.getElementById('lbOpen'),lbDownload=document.getElementById('lbDownload');
+  var currentUrl='';
   function openLightbox(url){currentUrl=url;lbImg.src=url;lbOpen.href=url;lb.classList.add('open');}
   document.getElementById('lbClose').addEventListener('click',function(){lb.classList.remove('open')});
   lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('open');});
-
-  // DOWNLOAD: backend ke through (har browser/mobile pe pakka download)
   lbDownload.addEventListener('click',function(){
-    const a=document.createElement('a');
-    a.href=BACKEND+'/download?url='+encodeURIComponent(currentUrl);
-    a.setAttribute('download','');
-    document.body.appendChild(a); a.click(); a.remove();
+    var a=document.createElement('a');a.href=BACKEND+'/download?url='+encodeURIComponent(currentUrl);
+    a.setAttribute('download','');document.body.appendChild(a);a.click();a.remove();
   });
 </script>
 </body>
