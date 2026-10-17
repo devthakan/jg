@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JG Legha | Automation Expert</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(28,100%,74%,0.8) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189,100%,56%,0.8) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355,100%,93%,0.8) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(340,100%,76%,0.8) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(22,100%,77%,0.8) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(242,100%,70%,0.8) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(343,100%,76%,0.8) 0px, transparent 50%);
+            background-attachment: fixed;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #ff007f, #7928ca, #00d2ff);
+            background-size: 200% auto;
+            animation: textGradient 3s linear infinite;
+        }
+
+        @keyframes textGradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+        
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 8px solid transparent;
+            border-top-color: #ff007f;
+            border-bottom-color: #00d2ff;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .float-img {
+            animation: floatImg 4s ease-in-out infinite;
+        }
+        
+        @keyframes floatImg {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* --- 3D SCENE & BOX CSS (Adapted for Light Theme) --- */
+        .scene {
+            width: 240px;
+            height: 320px;
+            perspective: 1200px;
+            margin: 0 auto;
+            /* Separate the floating animation to the scene for smoother rendering */
+            animation: floatBox 4s ease-in-out infinite;
+        }
+
+        .box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateBox 15s linear infinite;
+        }
+
+        @keyframes floatBox {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes rotateBox {
+            0% { transform: translateZ(-100px) rotateX(-10deg) rotateY(0deg); }
+            100% { transform: translateZ(-100px) rotateX(-10deg) rotateY(360deg); }
+        }
+
+        /* Floor drop shadow for realistic physical box */
+        .box::after {
+            content: '';
+            position: absolute;
+            width: 240px;
+            height: 80px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, transparent 70%);
+            transform: rotateX(90deg) translateZ(-170px);
+            top: 120px;
+            left: 0;
+            filter: blur(10px);
+            pointer-events: none;
+        }
+
+        .face {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 245, 250, 0.85) 100%);
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* Realistic directional lighting & edge highlights */
+            box-shadow: 
+                inset 0 0 15px rgba(255, 255, 255, 1),
+                inset 0 0 50px var(--box-glow, rgba(0,0,0,0.05)),
+                0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.5s;
+            border-radius: 2px; /* Subtle physical edge corner */
+            overflow: hidden;
+        }
+
+        /* Glassmorphic glare/sheen reflection on faces */
+        .face::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 25%, rgba(255,255,255,0.7) 30%, transparent 35%);
+            pointer-events: none;
+            z-index: 2;
+            mix-blend-mode: overlay;
+        }
+
+        .face:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(245, 250, 255, 0.95) 100%);
+            box-shadow: 
+                inset 0 0 20px rgba(255, 255, 255, 1),
+                inset 0 0 60px var(--box-glow, rgba(0,0,0,0.15)),
+                0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Face Dimensions */
+        .front, .back { width: 240px; height: 320px; }
+        .right, .left { width: 80px; height: 320px; left: 80px; }
+        .top, .bottom { width: 240px; height: 80px; top: 120px; }
+
+        /* Translating Faces */
+        .front  { transform: rotateY(0deg) translateZ(40px); }
+        .back   { transform: rotateY(180deg) translateZ(40px); }
+        .right  { transform: rotateY(90deg) translateZ(120px); }
+        .left   { transform: rotateY(-90deg) translateZ(120px); }
+        .top    { transform: rotateX(90deg) translateZ(160px); }
+        .bottom { transform: rotateX(-90deg) translateZ(160px); }
+
+        /* Box Typography */
+        .badge {
+            background: var(--box-color);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px var(--box-glow);
+        }
+
+        .box-title {
+            color: #1f2937;
+            font-size: 1.6rem;
+            text-align: center;
+            font-weight: 800;
+            line-height: 1.2;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .box-title span {
+            color: var(--box-color);
+            font-size: 1.3rem;
+        }
+
+        .box-subtitle {
+            color: #4b5563;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 600;
+            padding: 0 10px;
+        }
+
+        .side-text {
+            color: var(--box-color);
+            transform: rotate(-90deg);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            font-weight: 800;
+            white-space: nowrap;
+            text-shadow: 0 0 5px rgba(255,255,255,0.8);
+        }
+
+        /* Modal Styles */
+        #policyModal {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #policyModal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content-box {
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        #policyModal.active .modal-content-box {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased selection:bg-pink-300 selection:text-white">
+
+    <!-- Loading Animation -->
+    <div id="loader">
+        <div class="loader-ring mb-4"></div>
+        <h2 class="text-3xl font-extrabold text-gradient">JG Legha</h2>
+        <p class="text-gray-500 font-semibold tracking-widest mt-2">LOADING...</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 pt-4 px-4 sm:px-8">
+        <div class="glass rounded-full max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gradient">JG Legha</div>
+            <div class="hidden md:flex space-x-8 text-gray-700 font-bold">
+                <a href="#about" class="hover:text-pink-500 transition">About</a>
+                <a href="#products" class="hover:text-purple-500 transition">Software</a>
+                <a href="#contact" class="hover:text-blue-500 transition">Contact</a>
+            </div>
+            <a href="https://wa.me/918094251586" target="_blank" class="bg-gradient-to-r from-gray-800 to-black text-white px-6 py-2 rounded-full font-bold shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5">Contact Me</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="about" class="min-h-screen flex flex-col items-center justify-center pt-32 pb-12 px-4 sm:px-8 gap-6 relative z-10">
+        <!-- Card 1: Profile -->
+        <div class="glass w-full max-w-5xl rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center gap-10 shadow-2xl border-t border-white/60">
+            <div class="flex-shrink-0 relative">
+                <div class="w-48 h-48 sm:w-64 sm:h-64 rounded-full glass p-2 float-img shadow-2xl relative z-10 bg-white/50">
+                    <img src="https://live.staticflickr.com/65535/55594720089_e05f75c059_b.jpg" alt="JG Legha" class="w-full h-full object-cover rounded-full border-4 border-white/80">
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-tr from-pink-400 to-blue-500 rounded-full blur-2xl opacity-40 animate-pulse"></div>
+            </div>
+            
+            <div class="flex-1 text-center md:text-left">
+                <h1 class="text-5xl sm:text-7xl font-black mb-4 tracking-tight">
+                    <span class="text-gradient">JG Legha</span>
+                </h1>
+                <div class="flex flex-wrap justify-center md:justify-start gap-3 mt-6">
+                    <span class="px-4 py-2 bg-blue-100/80 border border-blue-300 text-blue-800 font-bold rounded-full shadow-sm">Python Expert</span>
+                    <span class="px-4 py-2 bg-green-100/80 border border-green-300 text-green-800 font-bold rounded-full shadow-sm">Excel Expert</span>
+                    <span class="px-4 py-2 bg-purple-100/80 border border-purple-300 text-purple-800 font-bold rounded-full shadow-sm">Automation Expert</span>
+                    <span class="px-4 py-2 bg-pink-100/80 border border-pink-300 text-pink-800 font-bold rounded-full shadow-sm">Data Entry Automation Software Expert</span>
+                </div>
+                <div class="mt-8 flex justify-center md:justify-start">
+                    <a href="#products" class="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-3 rounded-full font-extrabold shadow-[0_10px_25px_rgba(99,102,241,0.4)] hover:shadow-[0_15px_35px_rgba(99,102,241,0.6)] transition-all transform hover:-translate-y-1">
+                        View My Work
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: Intro -->
+        <div class="glass w-full max-w-4xl rounded-2xl p-6 sm:p-8 text-center shadow-xl border-t border-white/60 mt-4">
+            <p class="text-xl sm:text-2xl text-gray-800 font-bold leading-relaxed m-0">
+                "I build powerful, modern, and highly efficient automation tools to streamline your business operations and save you valuable time."
+            </p>
+        </div>
+    </section>
+
+    <!-- Products Section with 3D Boxes -->
+    <section id="products" class="py-20 px-4 sm:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl sm:text-5xl font-black mb-4">My Premium <span class="text-gradient">Software</span></h2>
+                <p class="text-xl text-gray-700 font-semibold">Cutting-edge automation packaged perfectly for your business.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pt-8">
+                
+                <!-- Product 1: PMFBY -->
+                <div class="flex flex-col items-center justify-between" style="--box-color: #4f46e5; --box-glow: rgba(79,70,229,0.4);">
+                    <div class="scene mb-10">
+                        <div class="box">
+                            <div class="face front">
+                                <div class="badge">PRO EDITION</div>
+                                <div class="box-title">PMFBY<br><span>Automation</span><br><span>Tool</span></div>
+                                <div class="box-subtitle">Data Processing & Scripting</div>
+                            </div>
+                            <div class="face back">
+                                <div class="box-subtitle">Powered by Python</div>
+                                <div class="badge" style="margin-top: 10px;">V 2.0</div>
+                            </div>
+                            <div class="face right"><div class="side-text">AUTOMATION</div></div>
+                            <div class="face left"><div class="side-text">PMFBY TOOL</div></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/918094251586?text=I%20want%20to%20buy%20PMFBY%20Automation%20software" target="_blank" class="w-full max-w-[240px] text-center bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold py-3 rounded-xl shadow-[0_8px_20px_rgba(79,70,229,0.4)] transition-all transform hover:scale-105">
+                        Buy Now
+                    </a>
+                </div>
+
+                <!-- Product 2: KRP -->
+                <div class="flex flex-col items-center justify-between" style="--box-color: #e11d48; --box-glow: rgba(225,29,72,0.4);">
+                    <div class="scene mb-10">
+                        <div class="box" style="animation-delay: -3s;">
+                            <div class="face front">
+                                <div class="badge">ENTERPRISE</div>
+                                <div class="box-title">KRP<br><span>Automation</span><br><span>Tool</span></div>
+                                <div class="box-subtitle">High-speed robust processing</div>
+                            </div>
+                            <div class="face back">
+                                <div class="box-subtitle">Efficiency Redefined</div>
+                                <div class="badge" style="margin-top: 10px;">V 3.1</div>
+                            </div>
+                            <div class="face right"><div class="side-text">KRP SYSTEM</div></div>
+                            <div class="face left"><div class="side-text">AUTOMATION</div></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/918094251586?text=I%20want%20to%20buy%20KRP%20Automation%20software" target="_blank" class="w-full max-w-[240px] text-center bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-3 rounded-xl shadow-[0_8px_20px_rgba(225,29,72,0.4)] transition-all transform hover:scale-105">
+                        Buy Now
+                    </a>
+                </div>
+
+                <!-- Product 3: EPR Adhar -->
+                <div class="flex flex-col items-center justify-between" style="--box-color: #059669; --box-glow: rgba(5,150,105,0.4);">
+                    <div class="scene mb-10">
+                        <div class="box" style="animation-delay: -7s;">
+                            <div class="face front">
+                                <div class="badge">SECURE</div>
+                                <div class="box-title">EPR Adhar<br><span>KYC</span><br><span>Tool</span></div>
+                                <div class="box-subtitle">Seamless KYC verification</div>
+                            </div>
+                            <div class="face back">
+                                <div class="box-subtitle">Secure Mapping API</div>
+                                <div class="badge" style="margin-top: 10px;">V 1.5</div>
+                            </div>
+                            <div class="face right"><div class="side-text">KYC SYNC</div></div>
+                            <div class="face left"><div class="side-text">EPR ADHAR</div></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/918094251586?text=I%20want%20to%20buy%20EPR%20Adhar%20Kyc%20Automation%20software" target="_blank" class="w-full max-w-[240px] text-center bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-3 rounded-xl shadow-[0_8px_20px_rgba(5,150,105,0.4)] transition-all transform hover:scale-105">
+                        Buy Now
+                    </a>
+                </div>
+
+                <!-- Product 4: DATA Entry -->
+                <div class="flex flex-col items-center justify-between" style="--box-color: #ea580c; --box-glow: rgba(234,88,12,0.4);">
+                    <div class="scene mb-10">
+                        <div class="box" style="animation-delay: -11s;">
+                            <div class="face front">
+                                <div class="badge">UTILITY</div>
+                                <div class="box-title">DATA<br><span>Entry</span><br><span>Tool</span></div>
+                                <div class="box-subtitle">Customized daily orders</div>
+                            </div>
+                            <div class="face back">
+                                <div class="box-subtitle">Save 10x Time</div>
+                                <div class="badge" style="margin-top: 10px;">V 4.0</div>
+                            </div>
+                            <div class="face right"><div class="side-text">FAST ENTRY</div></div>
+                            <div class="face left"><div class="side-text">DATA TOOL</div></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/918094251586?text=I%20want%20to%20buy%20DATA%20Entry%20Software%20for%20my%20order" target="_blank" class="w-full max-w-[240px] text-center bg-orange-600 hover:bg-orange-700 text-white font-extrabold py-3 rounded-xl shadow-[0_8px_20px_rgba(234,88,12,0.4)] transition-all transform hover:scale-105">
+                        Buy Now
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="mt-20 pt-16 pb-8 px-4 sm:px-8 relative border-t border-white/60 z-10 glass">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center md:items-start gap-10">
+            
+            <!-- Brand & Contact -->
+            <div class="text-center md:text-left">
+                <h3 class="text-3xl font-black text-gradient mb-4">JG Legha</h3>
+                <p class="text-gray-800 font-bold mb-2 flex items-center justify-center md:justify-start gap-2">
+                    <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    Baytu, Barmer, Rajasthan
+                </p>
+                <p class="text-gray-800 font-bold flex items-center justify-center md:justify-start gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <a href="mailto:jogaleghakanod4@gmail.com" class="hover:text-blue-700 transition">jogaleghakanod4@gmail.com</a>
+                </p>
+            </div>
+
+            <!-- Socials -->
+            <div class="text-center">
+                <h4 class="text-xl font-extrabold text-gray-900 mb-4">Connect With Me</h4>
+                <div class="flex gap-4 justify-center">
+                    <a href="#" title="Facebook" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:-translate-y-1 transition text-blue-600 hover:bg-blue-100 shadow-md">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="#" title="Instagram" class="w-12 h-12 rounded-full glass flex items-center justify-center hover:-translate-y-1 transition text-pink-600 hover:bg-pink-100 shadow-md">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Policy Links -->
+            <div class="text-center md:text-right">
+                <h4 class="text-xl font-extrabold text-gray-900 mb-4">Important Links</h4>
+                <ul class="space-y-2 text-gray-700 font-bold">
+                    <li><button onclick="openModal('privacy')" class="hover:text-purple-700 transition">Privacy Policy</button></li>
+                    <li><button onclick="openModal('terms')" class="hover:text-purple-700 transition">Terms & Conditions</button></li>
+                    <li><button onclick="openModal('refund')" class="hover:text-purple-700 transition">Refund Policy</button></li>
+                    <li><button onclick="openModal('shipping')" class="hover:text-purple-700 transition">Shipping Policy</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-12 pt-6 border-t border-gray-400 text-center text-gray-800 font-bold text-sm">
+            © 2025 JG Legha Automation Solutions. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Policy Modal Overlay -->
+    <div id="policyModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm">
+        <div class="glass modal-content-box bg-white/80 w-full max-w-2xl rounded-2xl p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 transition">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 id="modalTitle" class="text-3xl font-black text-gray-800 mb-4 border-b-2 border-gray-300 pb-2">Title</h2>
+            <div id="modalContent" class="text-gray-700 font-medium space-y-4 leading-relaxed whitespace-pre-wrap"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Loading Screen
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 1000);
+        });
+
+        // Policy Data
+        const policies = {
+            privacy: {
+                title: "Privacy Policy",
+                content: `Last updated: 2025\n\nWelcome to JG Legha Automation Solutions. We respect your privacy and are committed to protecting your personal information.\n\nInformation We Collect\n- Name, Email address, Mobile number\n- Payment details (processed securely via payment gateway)\n- Technical information related to software usage\n\nHow We Use Your Information\n- To provide and improve our automation software and services\n- To process payments and invoices\n- To communicate updates, support, or service-related information\n- To comply with legal requirements\n\nData Security\nWe implement appropriate security measures to protect your personal data. Payment transactions are handled through secure third-party payment gateways. We do not store sensitive payment details.\n\nContact Us for any privacy concerns.`
+            },
+            terms: {
+                title: "Terms & Conditions",
+                content: `Last updated: 2025\n\nBy accessing or using JG Legha Automation Solutions, you agree to the following terms and conditions.\n\nServices\nWe provide automation and data processing software intended for business productivity and workflow management.\n\nUser Responsibility\n- The software must be used only for lawful purposes.\n- Users are responsible for ensuring compliance with the rules and policies of any third-party platforms they interact with.\n- Any misuse of the software is strictly prohibited.\n\nIntellectual Property\nAll software, content, logos, and materials on this website are the intellectual property of JG Legha Automation Solutions.\n\nLimitation of Liability\nWe are not responsible for any loss or damage arising from improper use of our software or services.\n\nGoverning Law\nThese terms shall be governed by the laws of India.`
+            },
+            refund: {
+                title: "Refund & Cancellation Policy",
+                content: `Last updated: 2025\n\nThank you for purchasing our software.\n\nDigital Product Policy\nOur products are digital software and automation services. Once the software license or service is activated, refunds are generally not available.\n\nRefund Eligibility\nRefunds may be considered only if:\n- There is a technical issue from our side.\n- The issue is reported within 7 days of purchase.\n- The issue cannot be resolved by our support team.\n\nNon-Refundable Cases\n- Change of mind after purchase.\n- Misuse of the software.\n- Failure to follow system or usage requirements.\n\nCancellation\nService cancellations must be requested via email. Approved cancellations (if applicable) will be processed within 7–10 working days.`
+            },
+            shipping: {
+                title: "Shipping & Delivery Policy",
+                content: `Last updated: 2025\n\nAt JG Legha Automation Solutions, we deal exclusively in digital products and software services. We do not sell or ship physical goods.\n\n1. Delivery Method\nAll our products (Software, Automation Tools, Excel Sheets) are delivered digitally. Upon successful payment, you will receive your product via:\n- Email: To your registered email address.\n- WhatsApp: Directly to your registered mobile number.\n\n2. Delivery Timeline\nSince our products are digital:\n- Instant Access: Most software links are shared immediately after payment confirmation.\n- Setup & Configuration: For custom automation projects, delivery may take between 24 to 48 hours depending on the complexity.\n\n3. Shipping Charges\nThere are NO shipping charges as all our products are delivered online.\n\n4. Non-Delivery Issues\nIf you do not receive the product link or email within 2 hours of payment, please contact us immediately.`
+            }
+        };
+
+        const modal = document.getElementById('policyModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+
+        function openModal(type) {
+            const data = policies[type];
+            if (data) {
+                modalTitle.textContent = data.title;
+                modalContent.textContent = data.content;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Enable scrolling
+        }
+
+        // Close modal when clicking outside the box
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
