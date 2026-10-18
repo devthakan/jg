@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JG Legha | Quick Links Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            background-image: 
+                radial-gradient(at 40% 20%, hsla(28,100%,74%,0.8) 0px, transparent 50%),
+                radial-gradient(at 80% 0%, hsla(189,100%,56%,0.8) 0px, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355,100%,93%,0.8) 0px, transparent 50%),
+                radial-gradient(at 80% 50%, hsla(340,100%,76%,0.8) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(22,100%,77%,0.8) 0px, transparent 50%),
+                radial-gradient(at 80% 100%, hsla(242,100%,70%,0.8) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, hsla(343,100%,76%,0.8) 0px, transparent 50%);
+            background-attachment: fixed;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #ff007f, #7928ca, #00d2ff);
+            background-size: 200% auto;
+            animation: textGradient 3s linear infinite;
+        }
+
+        @keyframes textGradient {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+        
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 8px solid transparent;
+            border-top-color: #ff007f;
+            border-bottom-color: #00d2ff;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- Simplifed Link Buttons --- */
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.875rem 1.5rem;
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 1rem;
+            color: #1f2937;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .link-btn:hover {
+            transform: translateY(-3px);
+            color: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-color: transparent;
+        }
+
+        /* Hover Color Themes */
+        .btn-blue:hover { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+        .btn-green:hover { background: linear-gradient(135deg, #10b981, #059669); }
+        .btn-orange:hover { background: linear-gradient(135deg, #f97316, #ef4444); }
+        .btn-purple:hover { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+
+    </style>
+</head>
+<body class="text-gray-800 antialiased selection:bg-pink-300 selection:text-white pb-20">
+
+    <!-- Loading Animation -->
+    <div id="loader">
+        <div class="loader-ring mb-4"></div>
+        <h2 class="text-3xl font-extrabold text-gradient">JG Legha</h2>
+        <p class="text-gray-500 font-semibold tracking-widest mt-2">LOADING LINKS...</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 pt-4 px-4 sm:px-8">
+        <div class="glass rounded-full max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gradient">JG Legha</div>
+            <a href="index.html" class="bg-gradient-to-r from-gray-800 to-black text-white px-6 py-2 rounded-full font-bold shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-32 px-4 sm:px-8 max-w-7xl mx-auto relative z-10">
+        
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-black mb-4 tracking-tight"><span class="text-gradient">Quick Links</span></h1>
+            <p class="text-xl text-gray-700 font-semibold">Easy access to all resources and tools.</p>
+        </div>
+
+        <div class="space-y-12">
+
+            <!-- Section 1: Old Projects -->
+            <section class="glass rounded-3xl p-6 sm:p-8 shadow-xl border-t border-white/60">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-blue-100 rounded-lg text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-black text-gray-800">Old Projects</h2>
+                </div>
+                
+                <!-- Link Grid: Copy and paste the <a> tags below to add more buttons -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <a href="#" class="link-btn btn-blue">Project Alpha</a>
+                    <a href="#" class="link-btn btn-blue">V1.0 Portal</a>
+                    <a href="#" class="link-btn btn-blue">Macro DB</a>
+                    <a href="#" class="link-btn btn-blue">Archive Script</a>
+                    <!-- Paste new buttons here -->
+                </div>
+            </section>
+
+            <!-- Section 2: KYC Section -->
+            <section class="glass rounded-3xl p-6 sm:p-8 shadow-xl border-t border-white/60">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-green-100 rounded-lg text-green-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-black text-gray-800">KYC Section</h2>
+                </div>
+                
+                <!-- Link Grid: Copy and paste the <a> tags below to add more buttons -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <a href="#" class="link-btn btn-green">EPR Adhar Check</a>
+                    <a href="#" class="link-btn btn-green">Client Drive</a>
+                    <a href="#" class="link-btn btn-green">Compliance Logs</a>
+                    <!-- Paste new buttons here -->
+                </div>
+            </section>
+
+            <!-- Section 3: Orders Section -->
+            <section class="glass rounded-3xl p-6 sm:p-8 shadow-xl border-t border-white/60">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-orange-100 rounded-lg text-orange-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-black text-gray-800">Orders Section</h2>
+                </div>
+                
+                <!-- Link Grid: Copy and paste the <a> tags below to add more buttons -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <a href="#" class="link-btn btn-orange">Order Tracker</a>
+                    <a href="#" class="link-btn btn-orange">Invoices</a>
+                    <a href="#" class="link-btn btn-orange">New Requests</a>
+                    <a href="#" class="link-btn btn-orange">Pending List</a>
+                    <!-- Paste new buttons here -->
+                </div>
+            </section>
+
+            <!-- Section 4: Data Packs -->
+            <section class="glass rounded-3xl p-6 sm:p-8 shadow-xl border-t border-white/60">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-purple-100 rounded-lg text-purple-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-black text-gray-800">Data Packs Section</h2>
+                </div>
+                
+                <!-- Link Grid: Copy and paste the <a> tags below to add more buttons -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <a href="#" class="link-btn btn-purple">PMFBY Templates</a>
+                    <a href="#" class="link-btn btn-purple">KRP Batch Files</a>
+                    <a href="#" class="link-btn btn-purple">Data Entry Dumps</a>
+                    <!-- Paste new buttons here -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // Loading Screen Animation
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 800);
+        });
+    </script>
+</body>
+</html>
