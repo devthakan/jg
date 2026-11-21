@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase License Key Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 50%, #dbeafe 100%);
+      color: #1e293b;
+      padding: 20px;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(30, 41, 59, 0.08);
+    }
+    #loginBox { max-width: 380px; margin: 80px auto; padding: 35px 30px; text-align: center; }
+    .brand {
+      font-size: 24px; font-weight: 700;
+      background: linear-gradient(90deg, #4f46e5, #9333ea);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+    .sub { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+    input, select {
+      width: 100%; padding: 11px 14px; margin-bottom: 14px;
+      border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; font-size: 14px; outline: none;
+    }
+    input:focus, select:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+    .btn { padding: 11px 18px; border: none; border-radius: 10px; font-weight: 600; font-size: 14px; cursor: pointer; transition: 0.2s; }
+    .btn-primary { background: linear-gradient(90deg, #4f46e5, #7c3aed); color: #fff; width: 100%; }
+    .btn-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+    .btn-sm { padding: 6px 10px; font-size: 12px; border-radius: 8px; margin: 2px; }
+    .btn-hold { background: #fef3c7; color: #b45309; }
+    .btn-active { background: #dcfce7; color: #15803d; }
+    .btn-reset { background: #e0f2fe; color: #0369a1; }
+    .btn-del { background: #fee2e2; color: #b91c1c; }
+    .btn-copy { background: #ede9fe; color: #5b21b6; }
+
+    #dashboard { display: none; max-width: 1100px; margin: 0 auto; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; margin-bottom: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    .stat { padding: 18px 20px; }
+    .stat h4 { font-size: 13px; color: #64748b; font-weight: 500; }
+    .stat p { font-size: 26px; font-weight: 700; color: #1e293b; margin-top: 4px; }
+
+    .gen-card { padding: 22px; margin-bottom: 20px; }
+    .gen-row { display: grid; grid-template-columns: 2fr 1fr 1.5fr 1fr; gap: 12px; align-items: center; }
+    .gen-row input, .gen-row select { margin-bottom: 0; }
+
+    .table-card { padding: 20px; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    th { color: #475569; font-weight: 600; background: rgba(241,245,249,0.7); }
+    .badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .b-active { background: #dcfce7; color: #15803d; }
+    .b-hold { background: #fef3c7; color: #b45309; }
+    .b-used { background: #e2e8f0; color: #475569; }
+    .key-code { font-family: monospace; font-weight: 700; font-size: 14px; color: #4338ca; letter-spacing: 1px; }
+
+    @media (max-width: 768px) { .gen-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div id="loginBox" class="glass">
+  <div class="brand">Firebase License Admin</div>
+  <div class="sub">Ultra-Fast APK Key Control Panel</div>
+  <input type="text" id="uName" placeholder="Username">
+  <input type="password" id="uPass" placeholder="Password">
+  <button class="btn btn-primary" onclick="doLogin()">Login</button>
+  <p id="loginMsg" style="color:#dc2626; font-size:13px; margin-top:10px;"></p>
+</div>
+
+<div id="dashboard">
+  <div class="topbar glass">
+    <div>
+      <div class="brand" style="font-size:20px; margin:0;">License Key Manager</div>
+      <span style="font-size:12px; color:#64748b;">Firebase Realtime • 8-Digit Numeric • Instant Sync</span>
+    </div>
+    <div>
+      <button class="btn btn-reset btn-sm" onclick="loadKeys()">Refresh</button>
+      <button class="btn btn-del btn-sm" onclick="location.reload()">Logout</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="glass stat"><h4>Total Keys</h4><p id="stTotal">0</p></div>
+    <div class="glass stat"><h4>Active Keys</h4><p id="stActive" style="color:#16a34a;">0</p></div>
+    <div class="glass stat"><h4>Hold / Used</h4><p id="stHold" style="color:#d97706;">0</p></div>
+  </div>
+
+  <div class="glass gen-card">
+    <h3 style="margin-bottom:14px; font-size:16px;">Generate 8-Digit Numeric Key</h3>
+    <div class="gen-row">
+      <input type="text" id="custName" placeholder="Customer Name (e.g. Ramesh)">
+      <input type="number" id="validDays" placeholder="Days" value="30">
+      <select id="keyType">
+        <option value="DEVICE_LOCK">Device Lock (1 Mobile)</option>
+        <option value="ONE_TIME">One-Time Use Key</option>
+      </select>
+      <button class="btn btn-primary" id="genBtn" onclick="createKey()">+ Generate</button>
+    </div>
+  </div>
+
+  <div class="glass table-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <h3 style="font-size:16px;">All Generated Keys</h3>
+      <input type="text" id="searchBox" placeholder="Search key or name..." oninput="renderTable()" style="max-width:250px; margin:0;">
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>8-Digit Key</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Device ID</th>
+          <th>Expiry</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="keyTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // ================= CONFIGURATION =================
+  const DB_URL = "https://apk-license-default-rtdb.asia-southeast1.firebasedatabase.app/"; // Yahan apna Firebase URL dalein (end me / mat lagana)
+  const ADMIN_USER = "admin";
+  const ADMIN_PASS = "123456";
+  // =================================================
+
+  let allKeys = [];
+
+  function doLogin() {
+    const u = document.getElementById('uName').value.trim();
+    const p = document.getElementById('uPass').value.trim();
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      document.getElementById('loginBox').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadKeys();
+    } else {
+      document.getElementById('loginMsg').innerText = "Galat Username ya Password!";
+    }
+  }
+
+  async function loadKeys() {
+    try {
+      const res = await fetch(`${DB_URL}/keys.json`);
+      const data = await res.json();
+      allKeys = [];
+      if (data) {
+        Object.keys(data).forEach(k => {
+          allKeys.push({ key: k, ...data[k] });
+        });
+        allKeys.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      }
+      document.getElementById('stTotal').innerText = allKeys.length;
+      document.getElementById('stActive').innerText = allKeys.filter(x => x.status === 'ACTIVE').length;
+      document.getElementById('stHold').innerText = allKeys.filter(x => x.status !== 'ACTIVE').length;
+      renderTable();
+    } catch (err) {
+      alert("Firebase connect error! Apna DB_URL check karein.");
+    }
+  }
+
+  function renderTable() {
+    const q = document.getElementById('searchBox').value.toLowerCase();
+    const tbody = document.getElementById('keyTable');
+    tbody.innerHTML = "";
+    allKeys.filter(x => x.key.includes(q) || (x.customer || "").toLowerCase().includes(q)).forEach(item => {
+      const badgeClass = item.status === 'ACTIVE' ? 'b-active' : (item.status === 'HOLD' ? 'b-hold' : 'b-used');
+      const toggleText = item.status === 'ACTIVE' ? 'Hold' : 'Activate';
+      const toggleClass = item.status === 'ACTIVE' ? 'btn-hold' : 'btn-active';
+      tbody.innerHTML += `
+        <tr>
+          <td><span class="key-code">${item.key}</span> <button class="btn btn-sm btn-copy" onclick="copyText('${item.key}')">Copy</button></td>
+          <td>${item.customer || '-'}</td>
+          <td>${item.type === 'ONE_TIME' ? 'One-Time' : 'Device Lock'}</td>
+          <td><span class="badge ${badgeClass}">${item.status}</span></td>
+          <td style="font-size:11px; color:#64748b;">${item.deviceId || 'Not Linked'}</td>
+          <td>${item.expiry || 'Lifetime'}</td>
+          <td>
+            <button class="btn btn-sm ${toggleClass}" onclick="toggleStatus('${item.key}', '${item.status}')">${toggleText}</button>
+            <button class="btn btn-sm btn-reset" onclick="resetDev('${item.key}')">Reset Device</button>
+            <button class="btn btn-sm btn-del" onclick="delKey('${item.key}')">Delete</button>
+          </td>
+        </tr>`;
+    });
+  }
+
+  async function createKey() {
+    const name = document.getElementById('custName').value.trim();
+    const days = parseInt(document.getElementById('validDays').value || "30", 10);
+    const type = document.getElementById('keyType').value;
+    if (!name) return alert("Customer ka naam dalein");
+
+    const key = String(Math.floor(10000000 + Math.random() * 90000000));
+    const expiryDate = new Date();
+    expiryDate.setDate(expiryDate.getDate() + days);
+    const expStr = expiryDate.toISOString().split('T')[0];
+
+    const btn = document.getElementById('genBtn');
+    btn.innerText = "Saving..."; btn.disabled = true;
+
+    await fetch(`${DB_URL}/keys/${key}.json`, {
+      method: "PUT",
+      body: JSON.stringify({
+        customer: name,
+        status: "ACTIVE",
+        type: type,
+        deviceId: "",
+        expiry: expStr,
+        createdAt: Date.now()
+      })
+    });
+
+    btn.innerText = "+ Generate"; btn.disabled = false;
+    document.getElementById('custName').value = "";
+    alert("New 8-Digit Key Created: " + key);
+    loadKeys();
+  }
+
+  async function toggleStatus(key, current) {
+    const next = current === "ACTIVE" ? "HOLD" : "ACTIVE";
+    await fetch(`${DB_URL}/keys/${key}.json`, {
+      method: "PATCH",
+      body: JSON.stringify({ status: next })
+    });
+    loadKeys();
+  }
+
+  async function resetDev(key) {
+    if (!confirm("Is key ka Device Lock hatana hai?")) return;
+    await fetch(`${DB_URL}/keys/${key}.json`, {
+      method: "PATCH",
+      body: JSON.stringify({ deviceId: "" })
+    });
+    loadKeys();
+  }
+
+  async function delKey(key) {
+    if (!confirm("Is key ko permanently delete karna hai?")) return;
+    await fetch(`${DB_URL}/keys/${key}.json`, { method: "DELETE" });
+    loadKeys();
+  }
+
+  function copyText(txt) {
+    navigator.clipboard.writeText(txt);
+    alert("Copied: " + txt);
+  }
+</script>
+</body>
+</html>
