@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Firebase License Key Manager</title>
+  <title>Secure Firebase License Manager</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
@@ -14,13 +14,13 @@
       padding: 20px;
     }
     .glass {
-      background: rgba(255, 255, 255, 0.8);
+      background: rgba(255, 255, 255, 0.82);
       backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.9);
       border-radius: 18px;
       box-shadow: 0 10px 30px rgba(30, 41, 59, 0.08);
     }
-    #loginBox { max-width: 380px; margin: 80px auto; padding: 35px 30px; text-align: center; }
+    #loginBox { max-width: 390px; margin: 80px auto; padding: 35px 30px; text-align: center; }
     .brand {
       font-size: 24px; font-weight: 700;
       background: linear-gradient(90deg, #4f46e5, #9333ea);
@@ -70,11 +70,11 @@
 <body>
 
 <div id="loginBox" class="glass">
-  <div class="brand">Firebase License Admin</div>
-  <div class="sub">Ultra-Fast APK Key Control Panel</div>
-  <input type="text" id="uName" placeholder="Username">
+  <div class="brand">Secure License Admin</div>
+  <div class="sub">Firebase Authenticated Control Panel</div>
+  <input type="email" id="uEmail" placeholder="Admin Email">
   <input type="password" id="uPass" placeholder="Password">
-  <button class="btn btn-primary" onclick="doLogin()">Login</button>
+  <button class="btn btn-primary" id="loginBtn" onclick="doLogin()">Secure Login</button>
   <p id="loginMsg" style="color:#dc2626; font-size:13px; margin-top:10px;"></p>
 </div>
 
@@ -82,7 +82,7 @@
   <div class="topbar glass">
     <div>
       <div class="brand" style="font-size:20px; margin:0;">License Key Manager</div>
-      <span style="font-size:12px; color:#64748b;">Firebase Realtime • 8-Digit Numeric • Instant Sync</span>
+      <span style="font-size:12px; color:#64748b;">Protected by Firebase Auth • 8-Digit Numeric</span>
     </div>
     <div>
       <button class="btn btn-reset btn-sm" onclick="loadKeys()">Refresh</button>
@@ -133,28 +133,60 @@
 
 <script>
   // ================= CONFIGURATION =================
-  const DB_URL = "https://apk-license-default-rtdb.asia-southeast1.firebasedatabase.app/"; // Yahan apna Firebase URL dalein (end me / mat lagana)
-  const ADMIN_USER = "admin";
-  const ADMIN_PASS = "123456";
+  const DB_URL = "https://apk-license-default-rtdb.asia-southeast1.firebasedatabase.app";
+  const API_KEY = "AIzaSyD-69LFraxgGjyvTcuvCOKUmyJuXtsbBZc";
   // =================================================
 
+  let idToken = "";
   let allKeys = [];
 
-  function doLogin() {
-    const u = document.getElementById('uName').value.trim();
-    const p = document.getElementById('uPass').value.trim();
-    if (u === ADMIN_USER && p === ADMIN_PASS) {
-      document.getElementById('loginBox').style.display = 'none';
-      document.getElementById('dashboard').style.display = 'block';
-      loadKeys();
-    } else {
-      document.getElementById('loginMsg').innerText = "Galat Username ya Password!";
+  async function doLogin() {
+    const email = document.getElementById('uEmail').value.trim();
+    const password = document.getElementById('uPass').value.trim();
+    const msg = document.getElementById('loginMsg');
+    const btn = document.getElementById('loginBtn');
+
+    if (!email || !password) {
+      msg.innerText = "Email aur Password dono dalein!";
+      return;
+    }
+
+    btn.innerText = "Verifying...";
+    btn.disabled = true;
+    msg.innerText = "";
+
+    try {
+      const res = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, returnSecureToken: true })
+      });
+      const data = await res.json();
+
+      if (data.idToken) {
+        idToken = data.idToken;
+        document.getElementById('loginBox').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        loadKeys();
+      } else {
+        msg.innerText = "Galat Email ya Password!";
+      }
+    } catch (err) {
+      msg.innerText = "Network error! Internet check karein.";
+    } finally {
+      btn.innerText = "Secure Login";
+      btn.disabled = false;
     }
   }
 
   async function loadKeys() {
     try {
-      const res = await fetch(`${DB_URL}/keys.json`);
+      const res = await fetch(`${DB_URL}/keys.json?auth=${idToken}`);
+      if (res.status === 401) {
+        alert("Session expire ho gaya hai, dobara login karein.");
+        location.reload();
+        return;
+      }
       const data = await res.json();
       allKeys = [];
       if (data) {
@@ -168,7 +200,7 @@
       document.getElementById('stHold').innerText = allKeys.filter(x => x.status !== 'ACTIVE').length;
       renderTable();
     } catch (err) {
-      alert("Firebase connect error! Apna DB_URL check karein.");
+      alert("Database load error! Firebase Rules check karein.");
     }
   }
 
@@ -211,7 +243,7 @@
     const btn = document.getElementById('genBtn');
     btn.innerText = "Saving..."; btn.disabled = true;
 
-    await fetch(`${DB_URL}/keys/${key}.json`, {
+    await fetch(`${DB_URL}/keys/${key}.json?auth=${idToken}`, {
       method: "PUT",
       body: JSON.stringify({
         customer: name,
@@ -231,7 +263,7 @@
 
   async function toggleStatus(key, current) {
     const next = current === "ACTIVE" ? "HOLD" : "ACTIVE";
-    await fetch(`${DB_URL}/keys/${key}.json`, {
+    await fetch(`${DB_URL}/keys/${key}.json?auth=${idToken}`, {
       method: "PATCH",
       body: JSON.stringify({ status: next })
     });
@@ -240,7 +272,7 @@
 
   async function resetDev(key) {
     if (!confirm("Is key ka Device Lock hatana hai?")) return;
-    await fetch(`${DB_URL}/keys/${key}.json`, {
+    await fetch(`${DB_URL}/keys/${key}.json?auth=${idToken}`, {
       method: "PATCH",
       body: JSON.stringify({ deviceId: "" })
     });
@@ -249,7 +281,7 @@
 
   async function delKey(key) {
     if (!confirm("Is key ko permanently delete karna hai?")) return;
-    await fetch(`${DB_URL}/keys/${key}.json`, { method: "DELETE" });
+    await fetch(`${DB_URL}/keys/${key}.json?auth=${idToken}`, { method: "DELETE" });
     loadKeys();
   }
 
